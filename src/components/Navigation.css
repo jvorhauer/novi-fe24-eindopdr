@@ -1,0 +1,27 @@
+nav {
+  justify-content: space-between;
+  text-align: center;
+  width: 100%;
+}
+
+nav ul {
+  list-style: none;
+  display: inline-block;
+}
+
+nav .links {
+  margin-left: 2px;
+}
+
+nav ul li {
+  margin-right: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
+  display: inline;
+  vertical-align: middle;
+}
+nav ul li button {
+  border: none;
+  background-color: transparent;
+  color: white;
+}

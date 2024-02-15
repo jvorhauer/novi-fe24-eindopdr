@@ -9,12 +9,12 @@ const Navigation = () => {
 
   return (
     <nav>
-      <Link to="/">
-        <span className="logo">
-          <i className="fas fa-user-edit" title="Novi FrontEnd EindOpdracht 2024"></i>
-        </span>
-      </Link>
       <ul className="links">
+          <li>
+            <Link to="/">
+              <i className="fas fa-user-edit" title="Novi FrontEnd EindOpdracht 2024"></i>
+            </Link>
+          </li>
         {isAuth ?
           <span>
             <li>

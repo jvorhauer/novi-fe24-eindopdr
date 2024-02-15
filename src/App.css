@@ -4,3 +4,29 @@
   text-align: center;
   width: 920px;
 }
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-bottom: 10px;
+}
+
+.form-row label {
+  display: block;
+  padding-left: 20px;
+}
+
+.form-row input {
+  width: 80%;
+}
+
+.form-row button {
+  margin-left: 15px;
+}

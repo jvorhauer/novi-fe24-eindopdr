@@ -31,7 +31,7 @@ const Login = () => {
     <section className="login-form">
       <h1>Log in</h1>
       <form onSubmit={handleSubmit}>
-        <div className="input-row">
+        <div className="form-row">
           <label htmlFor="email-field">Emailadres:</label>
           <input
             type="email"
@@ -42,7 +42,7 @@ const Login = () => {
           />
         </div>
 
-        <div className="input-row">
+        <div className="form-row">
           <label htmlFor="password-field">Wachtwoord:</label>
           <input
             type="password"
@@ -54,14 +54,14 @@ const Login = () => {
         </div>
         {error && <p className="error">Combinatie van emailadres en wachtwoord is onjuist</p>}
 
-        <div className="input-row">
+        <div className="form-row">
           <button type="submit" className="form-button">
             Inloggen
           </button>
         </div>
       </form>
 
-      <p>Heb je nog geen account? <Link to="/signup">Registreer</Link> je dan eerst.</p>
+      <p>Heb je nog geen account? <Link to="/registreer">Registreer</Link> je dan eerst.</p>
     </section>
   );
 }

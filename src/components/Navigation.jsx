@@ -2,9 +2,10 @@ import {useContext} from 'react';
 import {AuthContext} from '../context/AuthContext.jsx';
 import {Link, useNavigate} from 'react-router-dom';
 import "./Navigation.css";
+import {Clicker} from './Button.jsx';
 
 const Navigation = () => {
-  const {isAuth, logout} = useContext(AuthContext);
+  const {isAuth, logout, user} = useContext(AuthContext);
   const navigate = useNavigate();
 
   return (
@@ -18,22 +19,22 @@ const Navigation = () => {
         {isAuth ?
           <span>
             <li>
-              <button type="button" onClick={() => navigate("/taken")}>Taken</button>
+              <Clicker handler={() => navigate("/taken")}>Taken</Clicker>
             </li>
             <li>
-              <button type="button" onClick={() => navigate("/notities")}>Notities</button>
+              <Clicker handler={() => navigate("/notities")}>Notities</Clicker>
             </li>
             <li>
-              <button type="button" onClick={() => logout()}>Log uit</button>
+              <Clicker handler={() => logout()}>Log <strong>{user.username}</strong> uit</Clicker>
             </li>
           </span>
           :
           <span>
             <li>
-              <button type="button" onClick={() => navigate("/login")}>Log in</button>
+              <Clicker handler={() => navigate("/login")}>Log in</Clicker>
             </li>
             <li>
-              <button type="button" onClick={() => navigate("/registreer")}>Registreer</button>
+              <Clicker handler={() => navigate("/registreer")}>Registreer</Clicker>
             </li>
           </span>
         }

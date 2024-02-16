@@ -31,7 +31,6 @@ function AuthContextProvider( { children } ) {
   function login( JWT ) {
     localStorage.setItem( 'token', JWT );
     const decoded = jwt_decode( JWT );
-    console.log( decoded );
     void fetchUserData(decoded.uid, JWT, "/");
   }
 

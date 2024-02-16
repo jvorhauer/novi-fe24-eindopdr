@@ -1,7 +1,10 @@
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import axios from 'axios';
 import cfg from '../config.json';
-import {Link, useNavigate} from 'react-router-dom';
+import {Link} from 'react-router-dom';
+import {AuthContext} from '../context/AuthContext.jsx';
+import {Input} from '../components/Input.jsx';
+import {Submit} from '../components/Button.jsx';
 
 const Registreer = () => {
   const [email, setEmail] = useState("");
@@ -10,10 +13,10 @@ const Registreer = () => {
   const [nogmaals, setNogmaals] = useState("");
   const [error, toggleError] = useState(false);
   const [msg, setMsg] = useState("");
-  const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  async function handleSubmit(event) {
+    event.preventDefault();
     toggleError(false);
 
     if (!password || !nogmaals || !naam || !email) {
@@ -30,8 +33,7 @@ const Registreer = () => {
             name: naam,
             password: password,
           });
-          console.log(result.data);
-          navigate("/login");
+          login(result.data.token);
         } catch (e) {
           console.error(e);
           setMsg(`Het registreren is mislukt: ${e.response.data}; probeer het opnieuw`);
@@ -46,26 +48,20 @@ const Registreer = () => {
       <h1>Registreer</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-row">
-          <label htmlFor="email-field">Emailadres:</label>
-          <input type="email" id="email-field" name="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+          <Input label="Emailadres" type="email" name="email" handler={(e) => setEmail(e.target.value)}>{email}</Input>
         </div>
         <div className="form-row">
-          <label htmlFor="naam-field">Naam:</label>
-          <input type="text" id="naam-field" name="naam" value={naam} onChange={(e) => setNaam(e.target.value)}/>
+          <Input label="Naam" type="text" name="naam" handler={(e) => setNaam(e.target.value)}>{naam}</Input>
         </div>
         <div className="form-row">
-          <label htmlFor="password-field">Wachtwoord:</label>
-          <input type="password" id="password-field" name="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+          <Input label="Wachtwoord" type="password" name="password" handler={(e) => setPassword(e.target.value)}>{password}</Input>
         </div>
         <div className="form-row">
-          <label htmlFor="nogmaals-field">Nogmaals:</label>
-          <input type="password" id="nogmaals-field" name="nogmaals" value={nogmaals} onChange={(e) => setNogmaals(e.target.value)}/>
+          <Input label="Nogmaals" type="password" name="nogmaals" handler={(e) => setNogmaals(e.target.value)}>{nogmaals}</Input>
         </div>
         {error && <p className="error">{msg}</p>}
         <div className="form-row">
-          <button type="submit" className="form-button">
-            Registreer
-          </button>
+          <Submit>Registreer</Submit>
         </div>
       </form>
 

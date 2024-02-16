@@ -3,6 +3,8 @@ import {AuthContext} from '../context/AuthContext.jsx';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 import cfg from '../config.json';
+import {Submit} from '../components/Button.jsx';
+import {Input} from '../components/Input.jsx';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -10,8 +12,8 @@ const Login = () => {
   const [error, toggleError] = useState(false);
   const { login } = useContext(AuthContext);
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  async function handleSubmit(event) {
+    event.preventDefault();
     toggleError(false);
 
     try {
@@ -19,7 +21,6 @@ const Login = () => {
         username: email,
         password: password,
       });
-      console.log(result.data);
       login(result.data.token);
     } catch(e) {
       console.error(e);
@@ -32,32 +33,20 @@ const Login = () => {
       <h1>Log in</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-row">
-          <label htmlFor="email-field">Emailadres:</label>
-          <input
-            type="email"
-            id="email-field"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          <Input label="Emailadres" type="email" name="email" handler={(e) => setEmail(e.target.value)}>
+            {email}
+          </Input>
         </div>
 
         <div className="form-row">
-          <label htmlFor="password-field">Wachtwoord:</label>
-          <input
-            type="password"
-            id="password-field"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <Input label="Wachtwoord" type="password" name="password" handler={(e) => setPassword(e.target.value)}>
+            {password}
+          </Input>
         </div>
         {error && <p className="error">Combinatie van emailadres en wachtwoord is onjuist</p>}
 
         <div className="form-row">
-          <button type="submit" className="form-button">
-            Inloggen
-          </button>
+          <Submit>Inloggen</Submit>
         </div>
       </form>
 

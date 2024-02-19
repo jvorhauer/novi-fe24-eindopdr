@@ -54,13 +54,14 @@ export const Taken = () => {
     event.currentTarget.classList.remove("drop")
     event.preventDefault()
 
+    setError("");
     const updatedState = cards.map(card => {
-      if (card.id.toString() === id) {
+      if (card.id === id) {
         card.status = column
-        axios.put(`${cfg.backend}/api/tasks`, { id: Number(card.id), status: column }, headrs)
-        .catch(err => {
-          console.log(err)
-          setError(`Kon de status van de Taak ${id} niet wijzigen (${err})`)
+        axios.put(`${cfg.backend}/api/tasks`, { id: card.id, status: column }, headrs)
+        .catch(error => {
+          console.log(error)
+          setError(`Kon de status van de Taak ${id} niet wijzigen (${error})`)
         })
       }
       return card
@@ -78,16 +79,12 @@ export const Taken = () => {
 
     console.log(`token: ${token}`)
 
-    axios.get(`${cfg.backend}/api/users/tasks`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }).then(result => setCards(result.data))
-    .catch(error => {
+    axios.get(`${cfg.backend}/api/users/tasks`, headrs)
+      .then(result => setCards(result.data))
+      .catch(error => {
         console.error(error);
         setError(`Ophalen van Taken is niet gelukt (${error})`)
-    });
+      });
 
     return () => {
       document.removeEventListener("dragstart", dragStart)
@@ -106,6 +103,7 @@ export const Taken = () => {
                 <article key={card.id} className={"card"} draggable={"true"} onDragStart={drag} data-id={card.id}>
                   <h3>{card.title}</h3>
                   <p>{card.body}</p>
+                  <p>{card.due}</p>
                 </article>
               ))}
             </div>

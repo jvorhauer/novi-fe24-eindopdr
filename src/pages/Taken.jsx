@@ -96,8 +96,13 @@ export const Taken = () => {
     <>
       <section className="board">
         {states.map(state => (
-            <div key={state.id} className={`column column-${state.id}`} data-column={state.id}
-                 onDrop={drop} onDragOver={allowDrop} onDragEnter={dragEnter} onDragLeave={dragLeave}>
+            <div key={state.id}
+                 className={`column column-${state.id}`}
+                 data-column={state.id}
+                 onDrop={drop}
+                 onDragOver={allowDrop}
+                 onDragEnter={dragEnter}
+                 onDragLeave={dragLeave}>
               <h2>{state.name}</h2>
               {cards.filter(card => card.status === state.id).map(card => (
                 <article key={card.id} className={"card"} draggable={"true"} onDragStart={drag} data-id={card.id}>

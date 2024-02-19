@@ -2,7 +2,7 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-  width: 920px;
+  width: 1200px;
 }
 
 form {
@@ -38,13 +38,12 @@ form {
   gap: 20px;
 }
 
-.card {
+.board .card {
   background: #3F4447;
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 3px;
-  width: 180px;
-  /*height: 60px;*/
+  width: 240px;
   cursor: grab;
   transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
@@ -65,7 +64,7 @@ form {
   background: #2c2c2c;
   border: 2px solid #2c2c2c;
   transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-  min-width: 170px;
+  min-width: 260px;
 }
 
 .column.column-TODO h2 {
@@ -78,11 +77,6 @@ form {
 
 .column.column-REVIEW h2 {
   background: grey;
-}
-
-.column-rev h2 {
-  background-color: yellow;
-  color: black;
 }
 
 .column.drop {

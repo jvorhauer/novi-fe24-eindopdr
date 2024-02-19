@@ -1,21 +1,22 @@
 nav {
   display: flex;
-  justify-content: space-evenly;
   width: 100%;
-  /*border-bottom: aliceblue solid 1px;*/
+  justify-content: space-between;
+  align-items: center;
+  border: grey solid 1px;
+  border-radius: 3px;
 }
 
 nav ul {
   list-style: none;
-  display: inline-block;
+  width: 100%;
 }
 
-nav .links {
-  margin-left: 2px;
+nav .logo {
+  display: flex;
 }
 
 nav ul li {
-  margin-right: 10px;
   padding-right: 10px;
   padding-left: 10px;
   display: inline;

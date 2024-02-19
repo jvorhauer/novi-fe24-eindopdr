@@ -10,14 +10,16 @@ const Navigation = () => {
 
   return (
     <nav>
-      <ul className="links">
-          <li>
-            <Link to="/">
-              <i className="fas fa-user-edit" title="Novi FrontEnd EindOpdracht 2024"></i>
-            </Link>
-          </li>
+      <ul>
+        <li className="logo">
+          <Link to="/">
+            <i className="fas fa-user-edit" title="Novi FrontEnd EindOpdracht 2024"></i>
+          </Link>
+        </li>
+      </ul>
+      <ul>
         {isAuth ?
-          <span>
+          <span className="nav-nav">
             <li>
               <Clicker handler={() => navigate("/taken")}>Taken</Clicker>
             </li>
@@ -29,7 +31,7 @@ const Navigation = () => {
             </li>
           </span>
           :
-          <span>
+          <span className="nav-nav">
             <li>
               <Clicker handler={() => navigate("/login")}>Log in</Clicker>
             </li>

@@ -1,12 +1,10 @@
-export const Button = ({ type, children }) => {
+export const Submit = ({ children }) => {
   return (
-    <button type={type} className="default-button">
+    <button type="submit" className="default-button">
       {children}
     </button>
   );
-};
-
-export const Submit = ({ children }) => Button("submit", children);
+}
 
 export const Clicker = ({ handler, children }) => {
   return (

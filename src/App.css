@@ -106,3 +106,37 @@ h2 {
   pointer-events: none;
   user-select: none;
 }
+
+.notes {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+}
+.notes aside {
+  flex: 0 0 25%;
+  border: grey solid 1px;
+  padding: 10px;
+}
+.notes aside .card {
+  color: white;
+  background: #2c2c2c;
+  padding: 10px;
+  margin-bottom: 5px;
+  text-align: left;
+}
+.notes aside .card:hover {
+  cursor: pointer;
+}
+.notes .separator {
+  flex: 0 0 1%;
+}
+.notes article {
+  flex: 1 0 auto;
+  padding: 10px;
+  text-align: left;
+  border: grey solid 1px;
+}
+.notes article h2 {
+  background: #2c2c2c;
+  padding: 10px;
+}

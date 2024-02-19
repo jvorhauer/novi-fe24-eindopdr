@@ -7,6 +7,7 @@ import {useContext} from 'react';
 import Navigation from './components/Navigation.jsx';
 import Registreer from './pages/Registreer.jsx';
 import {Taken} from './pages/Taken.jsx';
+import {Notities} from './pages/Notities.jsx';
 
 function App() {
   const { isAuth } = useContext(AuthContext);
@@ -20,7 +21,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/registreer" element={<Registreer />} />
           <Route path="/taken" element={isAuth ? <Taken /> : <Lorem />} />
-          <Route path="/notities" element={isAuth ? <Lorem /> : <Lorem />} />
+          <Route path="/notities" element={isAuth ? <Notities /> : <Lorem />} />
         </Routes>
       </div>
     </main>

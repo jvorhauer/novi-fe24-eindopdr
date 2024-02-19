@@ -3,6 +3,7 @@ import {AuthContext} from '../context/AuthContext.jsx';
 import {Link, useNavigate} from 'react-router-dom';
 import "./Navigation.css";
 import {Clicker} from './Button.jsx';
+import {Gravatar} from './Gravatar.jsx';
 
 const Navigation = () => {
   const {isAuth, logout, user} = useContext(AuthContext);
@@ -27,7 +28,7 @@ const Navigation = () => {
               <Clicker handler={() => navigate("/notities")}>Notities</Clicker>
             </li>
             <li>
-              <Clicker handler={() => logout()}>Log <strong>{user.username}</strong> uit</Clicker>
+              <Gravatar hash={user.gravatar} naam={user.username} onClick={() => logout()} />
             </li>
           </span>
           :

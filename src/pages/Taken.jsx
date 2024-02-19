@@ -77,8 +77,6 @@ export const Taken = () => {
     document.addEventListener("dragstart", dragStart)
     document.addEventListener("dragend", dragEnd)
 
-    console.log(`token: ${token}`)
-
     axios.get(`${cfg.backend}/api/users/tasks`, headrs)
       .then(result => setCards(result.data))
       .catch(error => {

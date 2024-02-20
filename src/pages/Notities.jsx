@@ -23,20 +23,24 @@ export const Notities = () => {
     const dialog = document.querySelector("." + clazz);
     if (!isDialogOpen) {
       dialog.showModal();
-      toggleDialogOpen(true);
     } else {
       dialog.close();
-      toggleDialogOpen(false);
+    }
+    toggleDialogOpen(!isDialogOpen)
+  }
+
+  const remove = (id) => {
+    if (confirm("Weet je zeker dat je de notitie wil verwijderen?")) {
+      axios.delete(`${cfg.backend}/api/notes/${id}`, headrs)
+        .then(() => setUpdated(true))
+        .catch(error => setError(`Kon de notitie niet verwijderen (${error})`));
     }
   }
 
   useEffect(() => {
     axios.get(`${cfg.backend}/api/users/notes`, headrs)
-    .then(result => setCards(result.data))
-    .catch(error => {
-      console.error(error);
-      setError(`Ophalen van Notities is niet gelukt (${error})`)
-    });
+      .then(result => setCards(result.data))
+      .catch(error => setError(`Ophalen van Notities is niet gelukt (${error})`));
 
     return () => {
       toggleDialogOpen(false);
@@ -70,7 +74,10 @@ export const Notities = () => {
           <span key={card.id}>
             <NoteDialog note={card} setUpdated={setUpdated} onClose={() => toggleDialogOpen(false)} />
             <h2>{card.title}</h2>
-            <p><Clicker handler={() => showDialog("note-editor")}><i className="fas fa-edit"></i> Edit</Clicker></p>
+            <p>
+              <Clicker handler={() => showDialog("note-editor")}><i className="fas fa-edit"></i> Edit</Clicker>
+              <Clicker handler={() => remove(card.id)}><i className="fas fa-dumpster-fire"></i> Verwijder</Clicker>
+            </p>
             <p><i>Aangemaakt: {card.created}</i></p>
             <p>{card.body}</p>
           </span>

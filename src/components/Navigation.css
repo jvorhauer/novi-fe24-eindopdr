@@ -27,3 +27,11 @@ nav ul li button {
   background-color: transparent;
   color: white;
 }
+
+.selected-menu-item {
+  text-decoration: green wavy underline;
+  font-weight: bolder;
+}
+.normal-menu-item {
+  font-weight: normal;
+}

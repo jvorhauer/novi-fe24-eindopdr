@@ -6,9 +6,9 @@ export const Submit = ({ children }) => {
   );
 }
 
-export const Clicker = ({ handler, children }) => {
+export const Clicker = ({ handler, children, className }) => {
   return (
-    <button type="button" className="default-button" onClick={handler}>
+    <button type="button" className={className} onClick={handler}>
       {children}
     </button>
   );

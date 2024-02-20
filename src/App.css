@@ -135,8 +135,14 @@ h2 {
   padding: 10px;
   text-align: left;
   border: grey solid 1px;
+  width: 70%;
 }
 .notes article h2 {
   background: #2c2c2c;
   padding: 10px;
+}
+
+dialog[open] {
+  width: 50%;
+  height: 50%;
 }

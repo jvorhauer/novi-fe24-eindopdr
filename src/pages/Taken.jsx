@@ -2,6 +2,8 @@ import {useContext, useEffect, useState} from 'react';
 import axios from 'axios';
 import cfg from '../config.json';
 import {AuthContext} from '../context/AuthContext.jsx';
+import {Clicker} from '../components/Button.jsx';
+import {TaskDialog} from '../components/TaskDialog.jsx';
 
 export const Taken = () => {
   const {requestHeaders} = useContext(AuthContext);
@@ -13,6 +15,9 @@ export const Taken = () => {
   ];
   const [cards, setCards] = useState([]);
   const [error, setError] = useState("");
+  const [updated, setUpdated] = useState(false);
+
+  const showDialog = (elementId) => document.getElementById(elementId).showModal();
 
   const dragStart = event => {
     if (event.target.className.includes("card")) event.target.classList.add("dragging")
@@ -45,7 +50,7 @@ export const Taken = () => {
     const updatedState = cards.map(card => {
       if (card.id === id) {
         card.status = column
-        axios.put(`${cfg.backend}/api/tasks`, { id: card.id, status: column }, requestHeaders())
+        axios.put(`${cfg.backend}/api/tasks`, { id: card.id, status: card.status }, requestHeaders())
         .catch(error => {
           console.log(error)
           setError(`Kon de status van de Taak ${id} niet wijzigen (${error})`)
@@ -70,35 +75,48 @@ export const Taken = () => {
       });
 
     return () => {
-      document.removeEventListener("dragstart", dragStart)
-      document.removeEventListener("dragend", dragEnd)
+      document.removeEventListener("dragstart", dragStart);
+      document.removeEventListener("dragend", dragEnd);
+      setUpdated(false);
     }
-  }, [])
+  }, [updated])
 
   return (
     <>
       <section className="board">
-        {states.map(state => (
-            <div key={state.id}
-                 className={`column column-${state.id}`}
-                 data-column={state.id}
-                 onDrop={drop}
-                 onDragOver={allowDrop}
-                 onDragEnter={dragEnter}
-                 onDragLeave={dragLeave}>
-              <h2>{state.name}</h2>
-              {cards.filter(card => card.status === state.id).map(card => (
-                <article key={card.id} className={"card"} draggable={"true"} onDragStart={drag} data-id={card.id}>
-                  <h3>{card.title}</h3>
-                  <p>{card.body}</p>
-                  <p>{card.due}</p>
-                </article>
-              ))}
-            </div>
-          )
-        )}
-      </section>
-      {error && <section><p className="error">{error}</p></section>}
+        {states.map(state =>
+          <div key={state.id}
+               className={`column column-${state.id}`}
+               data-column={state.id}
+               onDrop={drop}
+               onDragOver={allowDrop}
+               onDragEnter={dragEnter}
+               onDragLeave={dragLeave}>
+            <h2>{state.name}</h2>
+            {cards.filter(card => card.status === state.id).map(card =>
+              <article key={card.id} className={"card"} draggable={"true"} onDragStart={drag} data-id={card.id}>
+                <TaskDialog task={card} setUpdated={setUpdated} />
+                <h3>{card.title}</h3>
+                <p>
+                  <Clicker handler={() => showDialog(card.id)}><i className="fas fa-edit"></i> Edit</Clicker>
+                  <Clicker handler={() => remove(card.id)}><i className="fas fa-dumpster-fire"></i> Verwijder</Clicker>
+                </p>
+                <p><i>{card.due.substring(0, 16)}</i></p>
+                <p dangerouslySetInnerHTML={ { __html: card.body } }></p>
+              </article>)
+            }
+            {(state.id === "TODO") ?
+              <span>
+                <TaskDialog task={{title: '', body: '', due: ''}} setUpdated={setUpdated} />
+                <Clicker handler={() => showDialog("new-task")}><i className="fas fa-plus"></i> Nieuwe Taak</Clicker>
+              </span>
+              :
+              <></>
+            }
+      </div>
+      )}
+    </section>
+    {error && <section><p className="error">{error}</p></section>}
     </>
   )
 }

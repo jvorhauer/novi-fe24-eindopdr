@@ -16,16 +16,12 @@ const Login = () => {
     event.preventDefault();
     toggleError(false);
 
-    try {
-      const result = await axios.post(`${cfg.backend}/api/login`, {
-        username: email,
-        password: password,
-      });
-      login(result.data.token);
-    } catch(e) {
-      console.error(e);
-      toggleError(true);
-    }
+    axios.post(`${cfg.backend}/api/login`, {username: email, password: password})
+    .then(result => login(result.data.token))
+    .catch(error => {
+      console.error(error);
+      toggleError(true)
+    })
   }
 
   return (

@@ -8,16 +8,14 @@ import {AuthContext} from '../context/AuthContext.jsx';
 
 export const NoteDialog = ({ note, setUpdated }) => {
   const {requestHeaders} = useContext(AuthContext);
-
   const [title, setTitle] = useState(note.title);
   const [body, setBody] = useState(note.body);
   const [error, setError] = useState("");
-  const clazz = !note.id ? "note-inserter" : "note-editor";
-  const dialog = document.querySelector("dialog." + clazz);
+  const elementId = !note.id ? "new-note" : note.id;
 
   const close = (mark) => {
     console.log("close", mark);
-    dialog.close();
+    document.getElementById(elementId).close();
     setUpdated(mark);
   }
 
@@ -46,9 +44,9 @@ export const NoteDialog = ({ note, setUpdated }) => {
   }
 
   return (
-    <dialog id={!note.id ? "new-note" : note.id} className={clazz}>
-      <h2>{!note.id ? "Nieuwe Notitie" : `Wijzig ${note.id}`}</h2>
-      <form method="dialog" onSubmit={handleSubmit}>
+    <dialog id={!note.id ? "new-note" : note.id}>
+      <h2>{!note.id ? "Nieuwe" : "Wijzig"} Notitie</h2>
+      <form method="dialog" onSubmit={handleSubmit} onReset={() => close(false)}>
         <Input label="Titel" name="title" type="text" handler={(e) => setTitle(e.target.value)}>{title}</Input>
         <InputArea label="Tekst" name="body" handler={(e) => setBody(e.target.value)} rows="11" value={body}></InputArea>
         <Submit>Sla op</Submit>

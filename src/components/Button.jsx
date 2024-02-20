@@ -1,7 +1,7 @@
-export const Submit = ({ children }) => {
+export const Submit = () => {
   return (
     <button type="submit" className="default-button">
-      {children}
+      Bewaar
     </button>
   );
 }

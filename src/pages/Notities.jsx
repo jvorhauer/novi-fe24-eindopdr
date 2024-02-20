@@ -10,18 +10,12 @@ export const Notities = () => {
   const [cards, setCards] = useState([]);
   const [error, setError] = useState("");
   const [selected, setSelected] = useState("");
-  const [isDialogOpen, toggleDialogOpen] = useState(false);
   const [updated, setUpdated] = useState(false);
   const emptyNote = {id: undefined, title: '', body: ''};
 
-  const showDialog = (clazz) => {
-    const dialog = document.querySelector("." + clazz);
-    if (!isDialogOpen) {
-      dialog.showModal();
-    } else {
-      dialog.close();
-    }
-    toggleDialogOpen(!isDialogOpen)
+  const showDialog = (elementId) => {
+    let element = document.getElementById(elementId);
+    element.showModal();
   }
 
   const remove = (id) => {
@@ -38,7 +32,6 @@ export const Notities = () => {
       .catch(error => setError(`Ophalen van Notities is niet gelukt (${error})`));
 
     return () => {
-      toggleDialogOpen(false);
       setUpdated(false);
     }
   }, [updated]);
@@ -48,17 +41,14 @@ export const Notities = () => {
     <section className="notes">
       <aside>
         {cards.map(card => (
-          <div key={card.id} className="card" onClick={() => {
-            setSelected(card.id);
-            toggleDialogOpen(false);
-          }}>
+          <div key={card.id} className="card" onClick={() => setSelected(card.id)}>
             <h3>{card.title}</h3>
             <p><i>{card.created}</i></p>
           </div>
         ))}
         <div key="new" className="card">
           <NoteDialog note={emptyNote} setUpdated={setUpdated} onClose={() => toggleDialogOpen(false)} />
-          <p><Clicker handler={() => showDialog("note-inserter")}><i className="fas fa-plus"></i> Nieuwe notitie</Clicker></p>
+          <p><Clicker handler={() => showDialog("new-note")}><i className="fas fa-plus"></i> Nieuwe notitie</Clicker></p>
         </div>
       </aside>
 
@@ -70,16 +60,16 @@ export const Notities = () => {
             <NoteDialog note={card} setUpdated={setUpdated} onClose={() => toggleDialogOpen(false)} />
             <h2>{card.title}</h2>
             <p>
-              <Clicker handler={() => showDialog("note-editor")}><i className="fas fa-edit"></i> Edit</Clicker>
+              <Clicker handler={() => showDialog(card.id)}><i className="fas fa-edit"></i> Edit</Clicker>
               <Clicker handler={() => remove(card.id)}><i className="fas fa-dumpster-fire"></i> Verwijder</Clicker>
             </p>
             <p><i>Aangemaakt: {card.created}</i></p>
-            <p>{card.body}</p>
+            <p dangerouslySetInnerHTML={ { __html: card.body }}></p>
           </span>
         ))}
       </article>
     </section>
-    {error && <section><p>{error}</p></section>}
+    {error && <section><p className="error">{error}</p></section>}
   </>
   );
 }

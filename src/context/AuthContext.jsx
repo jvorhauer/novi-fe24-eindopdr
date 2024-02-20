@@ -6,32 +6,32 @@ import cfg from '../config.json';
 
 export const AuthContext = createContext( {} );
 
-function AuthContextProvider( { children } ) {
-  const [ isAuth, toggleIsAuth ] = useState( {
+function AuthContextProvider({ children }) {
+  const [isAuth, toggleIsAuth] = useState( {
     isAuth: false,
     user: null,
     status: 'pending',
   } );
   const navigate = useNavigate();
 
-  useEffect( () => {
+  useEffect(() => {
     const token = localStorage.getItem( 'token' );
     if (token) {
       const decoded = jwt_decode( token );
       void fetchUserData( decoded.sub, token );
     } else {
-      toggleIsAuth( {
+      toggleIsAuth({
         isAuth: false,
         user: null,
         status: 'done',
-      } );
+      });
     }
-  }, [] );
+  }, []);
 
-  function login( JWT ) {
-    localStorage.setItem( 'token', JWT );
-    const decoded = jwt_decode( JWT );
-    void fetchUserData(decoded.uid, JWT, "/");
+  function login(jwt) {
+    localStorage.setItem('token', jwt);
+    const decoded = jwt_decode(jwt);
+    void fetchUserData(decoded.uid, jwt, "/");
   }
 
   function logout() {
@@ -55,7 +55,7 @@ function AuthContextProvider( { children } ) {
     };
   }
 
-  async function fetchUserData(id, token, redirectUrl ) {
+  async function fetchUserData(id, token, redirectUrl) {
     try {
       const result = await axios.get(`${cfg.backend}/api/users/me`, {
         headers: {
@@ -78,16 +78,15 @@ function AuthContextProvider( { children } ) {
       } );
 
       if ( redirectUrl ) {
-        navigate( redirectUrl );
+        navigate(redirectUrl);
       }
-
-    } catch ( e ) {
-      console.error( e );
+    } catch (e) {
+      console.error(e);
       toggleIsAuth( {
         isAuth: false,
         user: null,
         status: 'done',
-      } );
+      });
     }
   }
 

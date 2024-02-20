@@ -1,18 +1,13 @@
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import {Input, InputArea} from './Input.jsx';
 import {Submit} from './Button.jsx';
 import axios from 'axios';
 import cfg from '../config.json';
 import {isBlank} from '../helpers/Validators.js';
+import {AuthContext} from '../context/AuthContext.jsx';
 
 export const NoteDialog = ({ note, setUpdated }) => {
-  const token = localStorage.getItem( 'token' );
-  const headrs = {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  };
+  const {requestHeaders} = useContext(AuthContext);
 
   const [title, setTitle] = useState(note.title);
   const [body, setBody] = useState(note.body);
@@ -40,15 +35,11 @@ export const NoteDialog = ({ note, setUpdated }) => {
     }
     if (isValid) {
       if (!note.id) {
-        axios.post(`${cfg.backend}/api/notes`, {title: title, body: body}, headrs).catch(error => {
-          console.error(`Could not create Note ${note.title} (${error})`);
-          setError(`Kon de nieuwe notitie niet opslaan (${error})`);
-        })
+        axios.post(`${cfg.backend}/api/notes`, {title: title, body: body}, requestHeaders())
+        .catch(error => setError(`Kon de nieuwe notitie niet opslaan (${error})`));
       } else {
-        axios.put(`${cfg.backend}/api/notes`, {id: note.id, title: title, body: body}, headrs).catch(error => {
-          console.error(`Could not update Note ${note.id} (${error})`);
-          setError(`Kon de notitie niet wijzigen (${error})`);
-        });
+        axios.put(`${cfg.backend}/api/notes`, {id: note.id, title: title, body: body}, requestHeaders())
+        .catch(error => setError(`Kon de notitie niet wijzigen (${error})`));
       }
       close(true);
     }

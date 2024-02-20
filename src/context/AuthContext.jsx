@@ -45,6 +45,16 @@ function AuthContextProvider( { children } ) {
     navigate( '/' );
   }
 
+  function requestHeaders() {
+    const token = localStorage.getItem( 'token' );
+    return {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+  }
+
   async function fetchUserData(id, token, redirectUrl ) {
     try {
       const result = await axios.get(`${cfg.backend}/api/users/me`, {
@@ -84,7 +94,8 @@ function AuthContextProvider( { children } ) {
   const contextData = {
     ...isAuth,
     login,
-    logout
+    logout,
+    requestHeaders
   };
 
   return (

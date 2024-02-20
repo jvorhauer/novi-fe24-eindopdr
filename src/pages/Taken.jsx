@@ -1,11 +1,10 @@
 import {useContext, useEffect, useState} from 'react';
-import {AuthContext} from '../context/AuthContext.jsx';
 import axios from 'axios';
 import cfg from '../config.json';
-import {useNavigate} from 'react-router-dom';
+import {AuthContext} from '../context/AuthContext.jsx';
 
 export const Taken = () => {
-  const token = localStorage.getItem( 'token' );
+  const {requestHeaders} = useContext(AuthContext);
   const states = [
     {id: "TODO", name: "Te Doen"},
     {id: "DOING", name: "Mee Bezig"},
@@ -14,18 +13,6 @@ export const Taken = () => {
   ];
   const [cards, setCards] = useState([]);
   const [error, setError] = useState("");
-  const { isAuth } = useContext(AuthContext);
-  const navigate = useNavigate();
-  const headrs = {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
-  if (!isAuth) {
-    navigate("/login");
-  }
 
   const dragStart = event => {
     if (event.target.className.includes("card")) event.target.classList.add("dragging")
@@ -58,7 +45,7 @@ export const Taken = () => {
     const updatedState = cards.map(card => {
       if (card.id === id) {
         card.status = column
-        axios.put(`${cfg.backend}/api/tasks`, { id: card.id, status: column }, headrs)
+        axios.put(`${cfg.backend}/api/tasks`, { id: card.id, status: column }, requestHeaders())
         .catch(error => {
           console.log(error)
           setError(`Kon de status van de Taak ${id} niet wijzigen (${error})`)
@@ -69,15 +56,13 @@ export const Taken = () => {
     setCards(updatedState)
   }
 
-  const allowDrop = event => {
-    event.preventDefault()
-  }
+  const allowDrop = event => event.preventDefault();
 
   useEffect(() => {
     document.addEventListener("dragstart", dragStart)
     document.addEventListener("dragend", dragEnd)
 
-    axios.get(`${cfg.backend}/api/users/tasks`, headrs)
+    axios.get(`${cfg.backend}/api/users/tasks`, requestHeaders())
       .then(result => setCards(result.data))
       .catch(error => {
         console.error(error);
@@ -113,11 +98,7 @@ export const Taken = () => {
           )
         )}
       </section>
-      {error &&
-        <section>
-          <p>{error}</p>
-        </section>
-      }
+      {error && <section><p className="error">{error}</p></section>}
     </>
   )
 }

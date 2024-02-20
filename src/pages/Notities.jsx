@@ -1,23 +1,18 @@
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import axios from 'axios';
 import cfg from '../config.json';
 import {NoteDialog} from '../components/NoteDialog.jsx';
 import {Clicker} from '../components/Button.jsx';
+import {AuthContext} from '../context/AuthContext.jsx';
 
 export const Notities = () => {
-  const token = localStorage.getItem( 'token' );
+  const {requestHeaders} = useContext(AuthContext);
   const [cards, setCards] = useState([]);
   const [error, setError] = useState("");
   const [selected, setSelected] = useState("");
   const [isDialogOpen, toggleDialogOpen] = useState(false);
   const [updated, setUpdated] = useState(false);
   const emptyNote = {id: undefined, title: '', body: ''};
-  const headrs = {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  };
 
   const showDialog = (clazz) => {
     const dialog = document.querySelector("." + clazz);
@@ -31,14 +26,14 @@ export const Notities = () => {
 
   const remove = (id) => {
     if (confirm("Weet je zeker dat je de notitie wil verwijderen?")) {
-      axios.delete(`${cfg.backend}/api/notes/${id}`, headrs)
+      axios.delete(`${cfg.backend}/api/notes/${id}`, requestHeaders())
         .then(() => setUpdated(true))
         .catch(error => setError(`Kon de notitie niet verwijderen (${error})`));
     }
   }
 
   useEffect(() => {
-    axios.get(`${cfg.backend}/api/users/notes`, headrs)
+    axios.get(`${cfg.backend}/api/users/notes`, requestHeaders())
       .then(result => setCards(result.data))
       .catch(error => setError(`Ophalen van Notities is niet gelukt (${error})`));
 

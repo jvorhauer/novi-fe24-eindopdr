@@ -1,6 +1,5 @@
 import {useContext, useEffect, useState} from 'react';
 import axios from 'axios';
-import cfg from '../config.json';
 import {NoteDialog} from '../components/NoteDialog.jsx';
 import {Clicker} from '../components/Button.jsx';
 import {AuthContext} from '../context/AuthContext.jsx';
@@ -26,7 +25,12 @@ export const Notities = () => {
 
   useEffect(() => {
     axios.get(urlBuilder("/api/users/notes"), requestHeaders())
-      .then(result => setCards(result.data))
+      .then(result => {
+        setCards(result.data);
+        if (!selected) {
+          setSelected(result.data[0].id);
+        }
+      })
       .catch(error => setError(`Ophalen van Notities is niet gelukt (${error})`));
 
     return () => {
@@ -60,12 +64,12 @@ export const Notities = () => {
             <NoteDialog note={card} setUpdated={setUpdated} />
             <h2>{card.title}</h2>
             <p>
-              <Clicker handler={() => showDialog(card.id)} className="edit-button">
-                <i className="fas fa-edit"></i> Edit
-              </Clicker>
-              <Clicker handler={() => remove(card.id)} className="remove-button">
-                <i className="fas fa-dumpster-fire"></i> Verwijder
-              </Clicker>
+              <button onClick={() => showDialog(card.id)} className="edit-button" title="Notitie wijzigen">
+                <i className="fas fa-edit"></i>
+              </button>
+              <button onClick={() => remove(card.id)} className="remove-button" title="Notitie verwijderen">
+                <i className="fas fa-dumpster-fire"></i>
+              </button>
             </p>
             <p><i>Aangemaakt: {card.created}</i></p>
             <p className="p_wrap">{card.body}</p>

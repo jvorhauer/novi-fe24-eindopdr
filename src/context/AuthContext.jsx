@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import cfg from '../config.json';
+import {urlBuilder} from '../helpers/UrlBuilder.js';
 
 export const AuthContext = createContext( {} );
 
@@ -15,7 +16,7 @@ function AuthContextProvider({ children }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem( 'token' );
+    const token = localStorage.getItem('token');
     if (token) {
       const decoded = jwt_decode( token );
       void fetchUserData( decoded.sub, token );
@@ -31,7 +32,7 @@ function AuthContextProvider({ children }) {
   function login(jwt) {
     localStorage.setItem('token', jwt);
     const decoded = jwt_decode(jwt);
-    void fetchUserData(decoded.uid, jwt, "/");
+    void fetchUserData(decoded.uid, jwt, "/taken");
   }
 
   function logout() {
@@ -41,8 +42,7 @@ function AuthContextProvider({ children }) {
       user: null,
       status: 'done',
     });
-    console.log('Gebruiker is uitgelogd!');
-    navigate( '/' );
+    navigate('/login');
   }
 
   function requestHeaders() {
@@ -57,14 +57,7 @@ function AuthContextProvider({ children }) {
 
   async function fetchUserData(id, token, redirectUrl) {
     try {
-      const result = await axios.get(`${cfg.backend}/api/users/me`, {
-        headers: {
-          "Accept": "application/json,text/plain",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${ token }`,
-        },
-      });
-
+      const result = await axios.get(urlBuilder("/api/users/me"), requestHeaders());
       toggleIsAuth( {
         ...isAuth,
         isAuth: true,

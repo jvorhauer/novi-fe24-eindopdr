@@ -20,12 +20,18 @@ form {
 .form-row label {
   display: block;
   padding-left: 20px;
+  padding-right: 10px;
 }
 .form-row input {
   width: 80%;
 }
 .form-row button {
   margin-left: 15px;
+}
+.form-separator {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
 }
 
 .board {
@@ -139,6 +145,9 @@ dialog[open] {
   height: 50%;
   min-height: 500px;
   max-height: 600px;
+}
+.login-form {
+  align-items: center;
 }
 
 .p_wrap {

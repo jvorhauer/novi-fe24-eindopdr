@@ -11,15 +11,15 @@
 }
 
 .edit-button {
-  background-color: blue;
+  background-color: #0000CC;
 }
 
 .remove-button {
-  background-color: red;
-  margin-left: 9px;
+  background-color: #CC0000;
+  margin-left: 7px;
 }
 
 .new-button {
   margin-top: 10px;
-  background-color: green;
+  background-color: #009900;
 }

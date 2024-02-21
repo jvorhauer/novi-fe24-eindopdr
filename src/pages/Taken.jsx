@@ -101,12 +101,12 @@ export const Taken = () => {
                 <TaskDialog task={card} setUpdated={setUpdated} />
                 <h3>{card.title}</h3>
                 <p>
-                  <Clicker handler={() => showDialog(card.id)} className="edit-button">
+                  <button onClick={() => showDialog(card.id)} className="edit-button" title="Taak wijzigen">
                     <i className="fas fa-edit"></i>
-                  </Clicker>
-                  <Clicker handler={() => remove(card.id)} className="remove-button">
+                  </button>
+                  <button onClick={() => remove(card.id)} className="remove-button" title="Taak verwijderen">
                     <i className="fas fa-dumpster-fire"></i>
-                  </Clicker>
+                  </button>
                 </p>
                 <p><i>{card.due.substring(0, 16)}</i></p>
                 <p className="p_wrap">{card.body}</p>

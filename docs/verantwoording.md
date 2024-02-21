@@ -51,6 +51,7 @@ Werkt alleen met Internet verbinding, aangezien backend daar ergens draait; geen
 
 1. De enige formattering in de tekst-velden van notitie en taak zijn regelovergangen (linebreaks), maar om die goed weer te geven moet je in React nogal wat zoeken, en dan kom je uit op `dangerouslySetInnerHTML` waarvan de naam nogal afschrikwekkend klinkt. Doordat de backend alle html tags encodeert voor de veiligheid gaat het alleen om `<br>`s dus niet heel erg gevaarlijk
 2. Heel soms werkt het automatisch verversen van de inhoud van een pagina niet de eerste keer: als bijvoorbeeld een notitie gewijzigd werd, dan wordt bijna altijd de inhoud van die notitie direct correct weergegeven. Maar heel soms niet.
+3. Graag had ik `useForm` gebruikt, maar dat wilde niet werken met de door mij gekozen opzet met een pagina waarop een herbruikbare `dialog` het invul-formulier toont: alle velden werden dan read-only en dat is wel veilig, maar niet gewenst.
 
 ## enige persoonlijke opmerkingen achteraf
 

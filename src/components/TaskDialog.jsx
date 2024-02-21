@@ -1,8 +1,7 @@
 import {useContext, useState} from 'react';
 import {AuthContext} from '../context/AuthContext.jsx';
 import {Input, InputArea} from './Input.jsx';
-import {Reset, Submit} from './Button.jsx';
-import {isBlank} from '../helpers/Validators.js';
+import {ResetButton, SaveButton} from './Button.jsx';
 import axios from 'axios';
 import {urlBuilder} from '../helpers/UrlBuilder.js';
 
@@ -23,35 +22,18 @@ export const TaskDialog = ({ task, setUpdated }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    let isValid = true;
-    setError("");
-    if (isBlank(title)) {
-      setError("Titel mag niet leeg zijn");
-      isValid = false;
+    let when = due.replace(' ', 'T');
+    if (when.length === 16) {
+      when = when + ":00";
     }
-    if (isBlank(body)) {
-      setError("Tekst mag niet leeg zijn");
-      isValid = false;
+    if (!task.id) {
+      axios.post(urlBuilder("/api/tasks"), { title: title, body: body, due: when }, requestHeaders())
+        .catch(error => setError(`Kon de nieuwe taak niet opslaan (${error})`));
+    } else {
+      axios.put(urlBuilder("/api/tasks"), { id: task.id, title: title, body: body, due: when }, requestHeaders())
+        .catch(error => setError(`Kon de taak niet wijzigen (${error})`));
     }
-    if (isBlank(due)) {
-      setError("Deadline mag niet leeg zijn");
-      isValid = false;
-    }
-    if (isValid) {
-      let when = due.replace(' ', 'T');
-      if (when.length === 16) {
-        when = when + ":00";
-      }
-      console.log("handleSubmit", when);
-      if (!task.id) {
-        axios.post(urlBuilder("/api/tasks"), { title: title, body: body, due: when}, requestHeaders())
-          .catch(error => setError(`Kon de nieuwe taak niet opslaan (${error})`));
-      } else {
-        axios.put(urlBuilder("/api/tasks"), {id: task.id, title: title, body: body, due: when}, requestHeaders())
-          .catch(error => setError(`Kon de taak niet wijzigen (${error})`));
-      }
-      close(true);
-    }
+    close(true);
   }
 
   return (
@@ -62,8 +44,8 @@ export const TaskDialog = ({ task, setUpdated }) => {
         <Input label="Deadline" name="due" type="datetime-local" handler={(e) => setDue(e.target.value)}>{due}</Input>
         <InputArea label="Tekst" name="body" handler={(e) => setBody(e.target.value)} rows="19" value={body}></InputArea>
         <div className="form-row">
-          <Reset />
-          <Submit />
+          <ResetButton />
+          <SaveButton />
         </div>
       </form>
       {error && <p className="error">{error}</p>}

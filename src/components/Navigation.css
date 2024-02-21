@@ -5,15 +5,20 @@ nav {
   align-items: center;
   border: grey solid 1px;
   border-radius: 3px;
+  max-height: 100px;
 }
 
 nav ul {
   list-style: none;
-  width: 100%;
+}
+nav ul span {
+  margin: 0;
+  padding: 0;
 }
 
 nav .logo {
   display: flex;
+  font-size: xx-large;
 }
 
 nav ul li {
@@ -23,14 +28,15 @@ nav ul li {
   vertical-align: middle;
 }
 nav ul li button {
-  border: none;
   background-color: transparent;
   color: white;
+  font-size: 1.2em;
 }
 
 .selected-menu-item {
   text-decoration: green wavy underline;
   font-weight: bolder;
+  font-size: 1.8em;
 }
 .normal-menu-item {
   font-weight: normal;

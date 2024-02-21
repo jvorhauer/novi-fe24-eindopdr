@@ -1,8 +1,7 @@
 import {useContext, useState} from 'react';
 import {Input, InputArea} from './Input.jsx';
-import {Reset, Submit} from './Button.jsx';
+import {ResetButton, SaveButton} from './Button.jsx';
 import axios from 'axios';
-import {isBlank} from '../helpers/Validators.js';
 import {AuthContext} from '../context/AuthContext.jsx';
 import {urlBuilder} from '../helpers/UrlBuilder.js';
 
@@ -20,27 +19,15 @@ export const NoteDialog = ({ note, setUpdated }) => {
   }
 
   const handleSubmit = (event) => {
-    let isValid = true;
     event.preventDefault();
-    setError("");
-    if (isBlank(title)) {
-      setError("Titel mag niet leeg zijn");
-      isValid = false;
+    if (!note.id) {
+      axios.post(urlBuilder("/api/notes"), {title: title, body: body}, requestHeaders())
+      .catch(error => setError(`Kon de nieuwe notitie niet opslaan (${error})`));
+    } else {
+      axios.put(urlBuilder("/api/notes"), {id: note.id, title: title, body: body}, requestHeaders())
+      .catch(error => setError(`Kon de notitie niet wijzigen (${error})`));
     }
-    if (isBlank(body)) {
-      setError("Tekst mag niet leeg zijn");
-      isValid = false;
-    }
-    if (isValid) {
-      if (!note.id) {
-        axios.post(urlBuilder("/api/notes"), {title: title, body: body}, requestHeaders())
-        .catch(error => setError(`Kon de nieuwe notitie niet opslaan (${error})`));
-      } else {
-        axios.put(urlBuilder("/api/notes"), {id: note.id, title: title, body: body}, requestHeaders())
-        .catch(error => setError(`Kon de notitie niet wijzigen (${error})`));
-      }
-      close(true);
-    }
+    close(true);
   }
 
   return (
@@ -50,8 +37,8 @@ export const NoteDialog = ({ note, setUpdated }) => {
         <Input label="Titel" name="title" type="text" handler={(e) => setTitle(e.target.value)}>{title}</Input>
         <InputArea label="Tekst" name="body" handler={(e) => setBody(e.target.value)} rows="21" value={body}></InputArea>
         <div className="form-row">
-          <Reset />
-          <Submit />
+          <ResetButton />
+          <SaveButton />
         </div>
       </form>
       {error && <p className="error">{error}</p>}

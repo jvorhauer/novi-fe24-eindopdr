@@ -13,6 +13,8 @@ const Navigation = () => {
   const selected = "selected-menu-item";
   const normal = "normal-menu-item";
 
+  const hilite = (here) => (pathname === here ? selected : normal);
+
   return (
     <nav>
       <ul>
@@ -22,30 +24,28 @@ const Navigation = () => {
           </Link>
         </li>
       </ul>
+      {isAuth ?
       <ul>
-        {isAuth ?
-          <span className="nav-nav">
-            <li>
-              <Clicker handler={() => navigate("/taken")} className={pathname === "/taken" ? selected : normal}>Taken</Clicker>
-            </li>
-            <li>
-              <Clicker handler={() => navigate("/notities")} className={pathname === "/notities" ? selected : normal}>Notities</Clicker>
-            </li>
-            <li>
-              <Gravatar hash={user.gravatar} naam={user.username} handler={() => logout()} />
-            </li>
-          </span>
-          :
-          <span className="nav-nav">
-            <li>
-              <Clicker handler={() => navigate("/login")}>Log in</Clicker>
-            </li>
-            <li>
-              <Clicker handler={() => navigate("/registreer")}>Registreer</Clicker>
-            </li>
-          </span>
-        }
+        <li>
+          <button className={hilite("/taken")} onClick={() => navigate("/taken")}>Taken</button>
+        </li>
+        <li>
+          <button className={hilite("/notities")} onClick={() => navigate("/notities")}>Notities</button>
+        </li>
+        <li>
+          <Gravatar hash={user.gravatar} naam={user.username} handler={() => logout()}/>
+        </li>
       </ul>
+      :
+      <ul>
+        <li>
+          <Clicker handler={() => navigate("/login")} className={pathname === "/login" ? selected : normal}>Log in</Clicker>
+        </li>
+        <li>
+          <Clicker handler={() => navigate("/registreer")} className={pathname === "/registreer" ? selected : normal}>Registreer</Clicker>
+        </li>
+      </ul>
+    }
     </nav>
   );
 }

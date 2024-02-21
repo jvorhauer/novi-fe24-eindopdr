@@ -1,10 +1,10 @@
-import {useContext, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import axios from 'axios';
 import cfg from '../config.json';
 import {Link} from 'react-router-dom';
 import {AuthContext} from '../context/AuthContext.jsx';
 import {Input} from '../components/Input.jsx';
-import {Submit} from '../components/Button.jsx';
+import {RegistreerButton, SaveButton} from '../components/Button.jsx';
 
 const Registreer = () => {
   const [email, setEmail] = useState("");
@@ -13,7 +13,7 @@ const Registreer = () => {
   const [nogmaals, setNogmaals] = useState("");
   const [error, toggleError] = useState(false);
   const [msg, setMsg] = useState("");
-  const { login } = useContext(AuthContext);
+  const {login} = useContext(AuthContext);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -45,27 +45,30 @@ const Registreer = () => {
 
   return (
     <section>
-      <h1>Registreer</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="form-row">
-          <Input label="Emailadres" type="email" name="email" handler={(e) => setEmail(e.target.value)}>{email}</Input>
-        </div>
-        <div className="form-row">
-          <Input label="Naam" type="text" name="naam" handler={(e) => setNaam(e.target.value)}>{naam}</Input>
-        </div>
-        <div className="form-row">
-          <Input label="Wachtwoord" type="password" name="password" handler={(e) => setPassword(e.target.value)}>{password}</Input>
-        </div>
-        <div className="form-row">
-          <Input label="Nogmaals" type="password" name="nogmaals" handler={(e) => setNogmaals(e.target.value)}>{nogmaals}</Input>
-        </div>
-        {error && <p className="error">{msg}</p>}
-        <div className="form-row">
-          <Submit>Registreer</Submit>
-        </div>
-      </form>
+      <dialog open>
+        <h2>Registreer</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-separator"><p></p></div>
+          <div className="form-row">
+            <Input label="Emailadres" type="email" name="email" handler={(e) => setEmail(e.target.value)}>{email}</Input>
+          </div>
+          <div className="form-row">
+            <Input label="Naam" type="text" name="naam" handler={(e) => setNaam(e.target.value)}>{naam}</Input>
+          </div>
+          <div className="form-row">
+            <Input label="Wachtwoord" type="password" name="password" handler={(e) => setPassword(e.target.value)}>{password}</Input>
+          </div>
+          <div className="form-row">
+            <Input label="Nogmaals" type="password" name="nogmaals" handler={(e) => setNogmaals(e.target.value)}>{nogmaals}</Input>
+          </div>
+          {error && <p className="error">{msg}</p>}
+          <div className="form-row">
+            <RegistreerButton />
+          </div>
+        </form>
 
-      <p>Heb je al een account? <Link to="/login">Log in</Link></p>
+        <p>Heb je al een account? <Link to="/login">Log in</Link></p>
+      </dialog>
     </section>
   );
 }

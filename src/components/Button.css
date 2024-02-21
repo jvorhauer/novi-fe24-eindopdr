@@ -11,12 +11,17 @@
 }
 
 .edit-button {
-  background-color: #0000CC;
+  background: transparent;
+  width: 15px;
+  margin: 0;
+  padding: 0 0 0 20px;
 }
 
 .remove-button {
-  background-color: #CC0000;
-  margin-left: 7px;
+  background: transparent;
+  width: 15px;
+  margin: 0;
+  padding: 0 0 0 30px;
 }
 
 .new-button {

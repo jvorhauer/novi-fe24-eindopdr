@@ -1,7 +1,7 @@
 import {useContext, useEffect, useState} from 'react';
 import axios from 'axios';
 import {NoteDialog} from '../components/NoteDialog.jsx';
-import {Clicker} from '../components/Button.jsx';
+import {EditButton, NewButton, RemoveButton} from '../components/Button.jsx';
 import {AuthContext} from '../context/AuthContext.jsx';
 import {urlBuilder} from '../helpers/UrlBuilder.js';
 
@@ -50,9 +50,7 @@ export const Notities = () => {
         ))}
         <div key="new" className="card">
           <NoteDialog note={emptyNote} setUpdated={setUpdated} />
-          <p><Clicker handler={() => showDialog("new-note")} className="new-button">
-            <i className="fas fa-plus"></i> Nieuwe notitie
-          </Clicker></p>
+          <p><NewButton handler={() => showDialog("new-note")} title="Maak nieuwe notitie" /></p>
         </div>
       </aside>
 
@@ -64,14 +62,10 @@ export const Notities = () => {
             <NoteDialog note={card} setUpdated={setUpdated} />
             <h2>{card.title}</h2>
             <p>
-              <button onClick={() => showDialog(card.id)} className="edit-button" title="Notitie wijzigen">
-                <i className="fas fa-edit"></i>
-              </button>
-              <button onClick={() => remove(card.id)} className="remove-button" title="Notitie verwijderen">
-                <i className="fas fa-dumpster-fire"></i>
-              </button>
+              <i>{card.created}</i>
+              <EditButton handler={() => showDialog(card.id)} title="Wijzig notitie"/>
+              <RemoveButton handler={() => remove(card.id)} title="Verwijder notitie"/>
             </p>
-            <p><i>Aangemaakt: {card.created}</i></p>
             <p className="p_wrap">{card.body}</p>
           </span>
         ))}

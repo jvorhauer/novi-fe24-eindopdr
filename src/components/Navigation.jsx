@@ -2,8 +2,8 @@ import {useContext} from 'react';
 import {AuthContext} from '../context/AuthContext.jsx';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import "./Navigation.css";
-import {Clicker} from './Button.jsx';
 import {Gravatar} from './Gravatar.jsx';
+import {NavButton} from './Button.jsx';
 
 const Navigation = () => {
   const {isAuth, logout, user} = useContext(AuthContext);
@@ -19,7 +19,7 @@ const Navigation = () => {
     <nav>
       <ul>
         <li className="logo">
-          <Link to="/">
+          <Link to="/taken">
             <i className="fas fa-user-edit" title="Novi FrontEnd EindOpdracht 2024"></i>
           </Link>
         </li>
@@ -27,7 +27,7 @@ const Navigation = () => {
       {isAuth ?
       <ul>
         <li>
-          <button className={hilite("/taken")} onClick={() => navigate("/taken")}>Taken</button>
+          <NavButton handler={() => navigate("/taken")} klass={hilite("/taken")}>Taken</NavButton>
         </li>
         <li>
           <button className={hilite("/notities")} onClick={() => navigate("/notities")}>Notities</button>
@@ -39,10 +39,10 @@ const Navigation = () => {
       :
       <ul>
         <li>
-          <Clicker handler={() => navigate("/login")} className={pathname === "/login" ? selected : normal}>Log in</Clicker>
+          <button className={hilite("/login")} onClick={() => navigate("/login")}>Log in</button>
         </li>
         <li>
-          <Clicker handler={() => navigate("/registreer")} className={pathname === "/registreer" ? selected : normal}>Registreer</Clicker>
+          <button className={hilite("/registreer")} onClick={() => navigate("/registreer")}>Registreer</button>
         </li>
       </ul>
     }

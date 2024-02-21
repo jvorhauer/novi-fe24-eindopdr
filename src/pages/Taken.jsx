@@ -1,8 +1,7 @@
 import {useContext, useEffect, useState} from 'react';
 import axios from 'axios';
-import cfg from '../config.json';
 import {AuthContext} from '../context/AuthContext.jsx';
-import {Clicker} from '../components/Button.jsx';
+import {EditButton, NewButton, RemoveButton} from '../components/Button.jsx';
 import {TaskDialog} from '../components/TaskDialog.jsx';
 import {urlBuilder} from '../helpers/UrlBuilder.js';
 
@@ -51,7 +50,7 @@ export const Taken = () => {
     const updatedState = cards.map(card => {
       if (card.id === id) {
         card.status = column
-        axios.put(urlBuilder("/api/tasks"), { id: card.id, status: card.status }, requestHeaders())
+        axios.put(urlBuilder("/api/tasks"), {id: card.id, status: card.status}, requestHeaders())
         .catch(error => setError(`Kon de status van de Taak ${id} niet wijzigen (${error})`));
       }
       return card;
@@ -74,8 +73,8 @@ export const Taken = () => {
     document.addEventListener("dragend", dragEnd)
 
     axios.get(urlBuilder("/api/users/tasks"), requestHeaders())
-      .then(result => setCards(result.data))
-      .catch(error => setError(`Ophalen van Taken is niet gelukt (${error})`));
+    .then(result => setCards(result.data))
+    .catch(error => setError(`Ophalen van Taken is niet gelukt (${error})`));
 
     return () => {
       document.removeEventListener("dragstart", dragStart);
@@ -97,35 +96,27 @@ export const Taken = () => {
                onDragLeave={dragLeave}>
             <h2>{state.name}</h2>
             {cards.filter(card => card.status === state.id).map(card =>
-              <article key={card.id} className={"card"} draggable={"true"} onDragStart={drag} data-id={card.id}>
-                <TaskDialog task={card} setUpdated={setUpdated} />
+              <article key={card.id} className="card" draggable={"true"} onDragStart={drag} data-id={card.id}>
+                <TaskDialog task={card} setUpdated={setUpdated}/>
                 <h3>{card.title}</h3>
                 <p>
-                  <button onClick={() => showDialog(card.id)} className="edit-button" title="Taak wijzigen">
-                    <i className="fas fa-edit"></i>
-                  </button>
-                  <button onClick={() => remove(card.id)} className="remove-button" title="Taak verwijderen">
-                    <i className="fas fa-dumpster-fire"></i>
-                  </button>
+                  <i>{card.due.substring(0, 16)}</i>
+                  <EditButton handler={() => showDialog(card.id)} title="Taak wijzigen"/>
+                  <RemoveButton handler={() => remove(card.id)} title="Taak verwijderen"/>
                 </p>
-                <p><i>{card.due.substring(0, 16)}</i></p>
                 <p className="p_wrap">{card.body}</p>
               </article>)
             }
             {(state.id === "TODO") ?
-              <span>
-                <TaskDialog task={{title: '', body: '', due: ''}} setUpdated={setUpdated} />
-                <Clicker handler={() => showDialog("new-task")} className="new-button">
-                  <i className="fas fa-plus"></i> Nieuwe Taak
-                </Clicker>
-              </span>
-              :
-              <></>
+              <div className="card">
+                <TaskDialog task={{title: '', body: '', due: ''}} setUpdated={setUpdated}/>
+                <NewButton handler={() => showDialog("new-task")} title="Maak nieuwe taak"/>
+              </div> : <></>
             }
-      </div>
-      )}
-    </section>
-    {error && <section><p className="error">{error}</p></section>}
+          </div>
+        )}
+      </section>
+      {error && <section><p className="error">{error}</p></section>}
     </>
   )
 }

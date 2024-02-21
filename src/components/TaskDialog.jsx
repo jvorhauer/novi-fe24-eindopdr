@@ -1,10 +1,10 @@
 import {useContext, useState} from 'react';
 import {AuthContext} from '../context/AuthContext.jsx';
 import {Input, InputArea} from './Input.jsx';
-import {Submit} from './Button.jsx';
+import {Reset, Submit} from './Button.jsx';
 import {isBlank} from '../helpers/Validators.js';
 import axios from 'axios';
-import cfg from '../config.json';
+import {urlBuilder} from '../helpers/UrlBuilder.js';
 
 export const TaskDialog = ({ task, setUpdated }) => {
   const {requestHeaders} = useContext(AuthContext);
@@ -44,10 +44,10 @@ export const TaskDialog = ({ task, setUpdated }) => {
       }
       console.log("handleSubmit", when);
       if (!task.id) {
-        axios.post(`${cfg.backend}/api/tasks`, { title: title, body: body, due: when}, requestHeaders())
+        axios.post(urlBuilder("/api/tasks"), { title: title, body: body, due: when}, requestHeaders())
           .catch(error => setError(`Kon de nieuwe taak niet opslaan (${error})`));
       } else {
-        axios.put(`${cfg.backend}/api/tasks`, {id: task.id, title: title, body: body, due: when}, requestHeaders())
+        axios.put(urlBuilder("/api/tasks"), {id: task.id, title: title, body: body, due: when}, requestHeaders())
           .catch(error => setError(`Kon de taak niet wijzigen (${error})`));
       }
       close(true);
@@ -57,12 +57,14 @@ export const TaskDialog = ({ task, setUpdated }) => {
   return (
     <dialog id={!task.id ? "new-task" : task.id}>
       <h2>{!task.id ? "Nieuwe" : "Wijzig"} Taak</h2>
-      <form method="dialog" onSubmit={handleSubmit} onReset={() => console.log("reset!")}>
+      <form method="dialog" onSubmit={handleSubmit} onReset={() => close(false)}>
         <Input label="Titel" name="title" type="text" handler={(e) => setTitle(e.target.value)}>{title}</Input>
         <Input label="Deadline" name="due" type="datetime-local" handler={(e) => setDue(e.target.value)}>{due}</Input>
-        <InputArea label="Tekst" name="body" handler={(e) => setBody(e.target.value)} rows="11" value={body}></InputArea>
-        <Submit />
-        <button type="reset" onClick={() => close(false)}>Laat maar</button>
+        <InputArea label="Tekst" name="body" handler={(e) => setBody(e.target.value)} rows="19" value={body}></InputArea>
+        <div className="form-row">
+          <Reset />
+          <Submit />
+        </div>
       </form>
       {error && <p className="error">{error}</p>}
     </dialog>

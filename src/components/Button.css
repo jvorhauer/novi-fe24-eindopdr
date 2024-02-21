@@ -1,0 +1,25 @@
+.default-button {
+  margin-top: 5px;
+  background-color: blue;
+  width: 120px;
+}
+
+.reset-button {
+  margin-top: 5px;
+  background-color: red;
+  width: 120px;
+}
+
+.edit-button {
+  background-color: blue;
+}
+
+.remove-button {
+  background-color: red;
+  margin-left: 9px;
+}
+
+.new-button {
+  margin-top: 10px;
+  background-color: green;
+}

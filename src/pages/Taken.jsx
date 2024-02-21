@@ -4,6 +4,7 @@ import cfg from '../config.json';
 import {AuthContext} from '../context/AuthContext.jsx';
 import {Clicker} from '../components/Button.jsx';
 import {TaskDialog} from '../components/TaskDialog.jsx';
+import {urlBuilder} from '../helpers/UrlBuilder.js';
 
 export const Taken = () => {
   const {requestHeaders} = useContext(AuthContext);
@@ -50,29 +51,31 @@ export const Taken = () => {
     const updatedState = cards.map(card => {
       if (card.id === id) {
         card.status = column
-        axios.put(`${cfg.backend}/api/tasks`, { id: card.id, status: card.status }, requestHeaders())
-        .catch(error => {
-          console.log(error)
-          setError(`Kon de status van de Taak ${id} niet wijzigen (${error})`)
-        })
+        axios.put(urlBuilder("/api/tasks"), { id: card.id, status: card.status }, requestHeaders())
+        .catch(error => setError(`Kon de status van de Taak ${id} niet wijzigen (${error})`));
       }
-      return card
-    })
-    setCards(updatedState)
+      return card;
+    });
+    setCards(updatedState);
   }
 
   const allowDrop = event => event.preventDefault();
+
+  const remove = (id) => {
+    if (confirm("Weet je zeker dat je de taak wil verwijderen?")) {
+      axios.delete(urlBuilder(`/api/tasks/${id}`), requestHeaders())
+      .then(() => setUpdated(true))
+      .catch(error => setError(`Kon de taak niet verwijderen (${error})`));
+    }
+  }
 
   useEffect(() => {
     document.addEventListener("dragstart", dragStart)
     document.addEventListener("dragend", dragEnd)
 
-    axios.get(`${cfg.backend}/api/users/tasks`, requestHeaders())
+    axios.get(urlBuilder("/api/users/tasks"), requestHeaders())
       .then(result => setCards(result.data))
-      .catch(error => {
-        console.error(error);
-        setError(`Ophalen van Taken is niet gelukt (${error})`)
-      });
+      .catch(error => setError(`Ophalen van Taken is niet gelukt (${error})`));
 
     return () => {
       document.removeEventListener("dragstart", dragStart);
@@ -98,17 +101,23 @@ export const Taken = () => {
                 <TaskDialog task={card} setUpdated={setUpdated} />
                 <h3>{card.title}</h3>
                 <p>
-                  <Clicker handler={() => showDialog(card.id)}><i className="fas fa-edit"></i> Edit</Clicker>
-                  <Clicker handler={() => remove(card.id)}><i className="fas fa-dumpster-fire"></i> Verwijder</Clicker>
+                  <Clicker handler={() => showDialog(card.id)} className="edit-button">
+                    <i className="fas fa-edit"></i>
+                  </Clicker>
+                  <Clicker handler={() => remove(card.id)} className="remove-button">
+                    <i className="fas fa-dumpster-fire"></i>
+                  </Clicker>
                 </p>
                 <p><i>{card.due.substring(0, 16)}</i></p>
-                <p dangerouslySetInnerHTML={ { __html: card.body } }></p>
+                <p className="p_wrap">{card.body}</p>
               </article>)
             }
             {(state.id === "TODO") ?
               <span>
                 <TaskDialog task={{title: '', body: '', due: ''}} setUpdated={setUpdated} />
-                <Clicker handler={() => showDialog("new-task")}><i className="fas fa-plus"></i> Nieuwe Taak</Clicker>
+                <Clicker handler={() => showDialog("new-task")} className="new-button">
+                  <i className="fas fa-plus"></i> Nieuwe Taak
+                </Clicker>
               </span>
               :
               <></>

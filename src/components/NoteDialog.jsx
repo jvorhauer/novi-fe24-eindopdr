@@ -1,10 +1,10 @@
 import {useContext, useState} from 'react';
 import {Input, InputArea} from './Input.jsx';
-import {Submit} from './Button.jsx';
+import {Reset, Submit} from './Button.jsx';
 import axios from 'axios';
-import cfg from '../config.json';
 import {isBlank} from '../helpers/Validators.js';
 import {AuthContext} from '../context/AuthContext.jsx';
+import {urlBuilder} from '../helpers/UrlBuilder.js';
 
 export const NoteDialog = ({ note, setUpdated }) => {
   const {requestHeaders} = useContext(AuthContext);
@@ -33,10 +33,10 @@ export const NoteDialog = ({ note, setUpdated }) => {
     }
     if (isValid) {
       if (!note.id) {
-        axios.post(`${cfg.backend}/api/notes`, {title: title, body: body}, requestHeaders())
+        axios.post(urlBuilder("/api/notes"), {title: title, body: body}, requestHeaders())
         .catch(error => setError(`Kon de nieuwe notitie niet opslaan (${error})`));
       } else {
-        axios.put(`${cfg.backend}/api/notes`, {id: note.id, title: title, body: body}, requestHeaders())
+        axios.put(urlBuilder("/api/notes"), {id: note.id, title: title, body: body}, requestHeaders())
         .catch(error => setError(`Kon de notitie niet wijzigen (${error})`));
       }
       close(true);
@@ -48,9 +48,11 @@ export const NoteDialog = ({ note, setUpdated }) => {
       <h2>{!note.id ? "Nieuwe" : "Wijzig"} Notitie</h2>
       <form method="dialog" onSubmit={handleSubmit} onReset={() => close(false)}>
         <Input label="Titel" name="title" type="text" handler={(e) => setTitle(e.target.value)}>{title}</Input>
-        <InputArea label="Tekst" name="body" handler={(e) => setBody(e.target.value)} rows="11" value={body}></InputArea>
-        <Submit>Sla op</Submit>
-        <button type="reset" onClick={() => close(false)}>Laat maar</button>
+        <InputArea label="Tekst" name="body" handler={(e) => setBody(e.target.value)} rows="21" value={body}></InputArea>
+        <div className="form-row">
+          <Reset />
+          <Submit />
+        </div>
       </form>
       {error && <p className="error">{error}</p>}
     </dialog>

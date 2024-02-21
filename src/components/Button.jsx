@@ -1,7 +1,17 @@
+import "./Button.css";
+
 export const Submit = () => {
   return (
     <button type="submit" className="default-button">
       Bewaar
+    </button>
+  );
+}
+
+export const Reset = () => {
+  return (
+    <button type="reset" className="reset-button">
+      Laat maar
     </button>
   );
 }

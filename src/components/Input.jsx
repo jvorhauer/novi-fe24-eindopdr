@@ -1,3 +1,5 @@
+import "./Input.css";
+
 export const Input = ({label, type, name, handler, children}) => {
   const id = name + "-field";
   return (

@@ -4,6 +4,7 @@ import cfg from '../config.json';
 import {NoteDialog} from '../components/NoteDialog.jsx';
 import {Clicker} from '../components/Button.jsx';
 import {AuthContext} from '../context/AuthContext.jsx';
+import {urlBuilder} from '../helpers/UrlBuilder.js';
 
 export const Notities = () => {
   const {requestHeaders} = useContext(AuthContext);
@@ -13,21 +14,18 @@ export const Notities = () => {
   const [updated, setUpdated] = useState(false);
   const emptyNote = {id: undefined, title: '', body: ''};
 
-  const showDialog = (elementId) => {
-    let element = document.getElementById(elementId);
-    element.showModal();
-  }
+  const showDialog = (elementId) => document.getElementById(elementId).showModal();
 
   const remove = (id) => {
     if (confirm("Weet je zeker dat je de notitie wil verwijderen?")) {
-      axios.delete(`${cfg.backend}/api/notes/${id}`, requestHeaders())
+      axios.delete(urlBuilder(`/api/notes/${id}`), requestHeaders())
         .then(() => setUpdated(true))
         .catch(error => setError(`Kon de notitie niet verwijderen (${error})`));
     }
   }
 
   useEffect(() => {
-    axios.get(`${cfg.backend}/api/users/notes`, requestHeaders())
+    axios.get(urlBuilder("/api/users/notes"), requestHeaders())
       .then(result => setCards(result.data))
       .catch(error => setError(`Ophalen van Notities is niet gelukt (${error})`));
 
@@ -47,8 +45,10 @@ export const Notities = () => {
           </div>
         ))}
         <div key="new" className="card">
-          <NoteDialog note={emptyNote} setUpdated={setUpdated} onClose={() => toggleDialogOpen(false)} />
-          <p><Clicker handler={() => showDialog("new-note")}><i className="fas fa-plus"></i> Nieuwe notitie</Clicker></p>
+          <NoteDialog note={emptyNote} setUpdated={setUpdated} />
+          <p><Clicker handler={() => showDialog("new-note")} className="new-button">
+            <i className="fas fa-plus"></i> Nieuwe notitie
+          </Clicker></p>
         </div>
       </aside>
 
@@ -57,14 +57,18 @@ export const Notities = () => {
       <article>
         {cards.filter(card => card.id === selected).map(card => (
           <span key={card.id}>
-            <NoteDialog note={card} setUpdated={setUpdated} onClose={() => toggleDialogOpen(false)} />
+            <NoteDialog note={card} setUpdated={setUpdated} />
             <h2>{card.title}</h2>
             <p>
-              <Clicker handler={() => showDialog(card.id)}><i className="fas fa-edit"></i> Edit</Clicker>
-              <Clicker handler={() => remove(card.id)}><i className="fas fa-dumpster-fire"></i> Verwijder</Clicker>
+              <Clicker handler={() => showDialog(card.id)} className="edit-button">
+                <i className="fas fa-edit"></i> Edit
+              </Clicker>
+              <Clicker handler={() => remove(card.id)} className="remove-button">
+                <i className="fas fa-dumpster-fire"></i> Verwijder
+              </Clicker>
             </p>
             <p><i>Aangemaakt: {card.created}</i></p>
-            <p dangerouslySetInnerHTML={ { __html: card.body }}></p>
+            <p className="p_wrap">{card.body}</p>
           </span>
         ))}
       </article>

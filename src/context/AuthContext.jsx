@@ -50,7 +50,7 @@ function AuthContextProvider({ children }) {
     return {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`
       },
     };
   }
@@ -59,6 +59,7 @@ function AuthContextProvider({ children }) {
     try {
       const result = await axios.get(`${cfg.backend}/api/users/me`, {
         headers: {
+          "Accept": "application/json,text/plain",
           "Content-Type": "application/json",
           Authorization: `Bearer ${ token }`,
         },

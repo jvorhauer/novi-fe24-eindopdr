@@ -13,7 +13,6 @@ export const NoteDialog = ({ note, setUpdated }) => {
   const elementId = !note.id ? "new-note" : note.id;
 
   const close = (mark) => {
-    console.log("close", mark);
     document.getElementById(elementId).close();
     setUpdated(mark);
   }
@@ -22,12 +21,13 @@ export const NoteDialog = ({ note, setUpdated }) => {
     event.preventDefault();
     if (!note.id) {
       axios.post(urlBuilder("/api/notes"), {title: title, body: body}, requestHeaders())
-      .catch(error => setError(`Kon de nieuwe notitie niet opslaan (${error})`));
+      .then(() => close(true))
+      .catch(err => setError(`Kon de nieuwe notitie niet opslaan (${err.response.data})`));
     } else {
       axios.put(urlBuilder("/api/notes"), {id: note.id, title: title, body: body}, requestHeaders())
-      .catch(error => setError(`Kon de notitie niet wijzigen (${error})`));
+      .then(() => close(true))
+      .catch(err => setError(`Kon de notitie niet wijzigen (${err.response.data})`));
     }
-    close(true);
   }
 
   return (

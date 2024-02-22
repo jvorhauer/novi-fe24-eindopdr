@@ -25,21 +25,21 @@ const Navigation = () => {
         </li>
       </ul>
       {isAuth ?
-      <ul>
-        <li>
-          <NavButton handler={() => navigate("/taken")} klass={hilite("/taken")}>Taken</NavButton>
-        </li>
-        <li>
-          <button className={hilite("/notities")} onClick={() => navigate("/notities")}>Notities</button>
-        </li>
-        <li>
-          <Gravatar hash={user.gravatar} naam={user.username} handler={() => logout()}/>
-        </li>
-      </ul>
-      :
-      <ul>
-        <li>
-          <button className={hilite("/login")} onClick={() => navigate("/login")}>Log in</button>
+        <ul>
+          <li>
+            <NavButton handler={() => navigate("/taken")} klass={hilite("/taken")}>Taken</NavButton>
+          </li>
+          <li>
+            <button className={hilite("/notities")} onClick={() => navigate("/notities")}>Notities</button>
+          </li>
+          <li>
+            <Gravatar hash={user.gravatar} naam={user.username} handler={() => logout()}/>
+          </li>
+        </ul>
+        :
+        <ul>
+          <li>
+            <button className={hilite("/login")} onClick={() => navigate("/login")}>Log in</button>
         </li>
         <li>
           <button className={hilite("/registreer")} onClick={() => navigate("/registreer")}>Registreer</button>

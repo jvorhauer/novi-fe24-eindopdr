@@ -27,7 +27,7 @@ export const Notities = () => {
     axios.get(urlBuilder("/api/users/notes"), requestHeaders())
       .then(result => {
         setCards(result.data);
-        if (!selected) {
+        if (!selected && result.data && result.data.length > 0) {
           setSelected(result.data[0].id);
         }
       })

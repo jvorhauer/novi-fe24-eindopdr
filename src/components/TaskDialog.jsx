@@ -4,36 +4,40 @@ import {Input, InputArea} from './Input.jsx';
 import {ResetButton, SaveButton} from './Button.jsx';
 import axios from 'axios';
 import {urlBuilder} from '../helpers/UrlBuilder.js';
+import {futureDateTime} from '../helpers/DateTimeHelper.js';
 
 export const TaskDialog = ({ task, setUpdated }) => {
   const {requestHeaders} = useContext(AuthContext);
   const [title, setTitle] = useState(task.title);
   const [body, setBody] = useState(task.body);
-  const [due, setDue] = useState(task.due);
+  const [due, setDue] = useState(!task.due ? futureDateTime() : task.due);
   const [error, setError] = useState("");
   const elementId = !task.id ? "new-task" : task.id;
   const dialog = document.getElementById(elementId);
 
   const close = (mark) => {
-    console.log("close", mark);
     dialog.close();
     setUpdated(mark);
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setError("");
     let when = due.replace(' ', 'T');
-    if (when.length === 16) {
-      when = when + ":00";
-    }
-    if (!task.id) {
-      axios.post(urlBuilder("/api/tasks"), { title: title, body: body, due: when }, requestHeaders())
-        .catch(error => setError(`Kon de nieuwe taak niet opslaan (${error})`));
+    if (when.length === 16) when = when + ":00";
+    if (new Date().getTime() > Date.parse(when)) {
+      setError("deadline moet in de toekomst liggen");
     } else {
-      axios.put(urlBuilder("/api/tasks"), { id: task.id, title: title, body: body, due: when }, requestHeaders())
-        .catch(error => setError(`Kon de taak niet wijzigen (${error})`));
+      if (!task.id) {
+        axios.post(urlBuilder("/api/tasks"), {title: title, body: body, due: when}, requestHeaders())
+        .then(() => close(true))
+        .catch(err => setError(`Kon de nieuwe taak niet opslaan (${err.response.data})`));
+      } else {
+        axios.put(urlBuilder("/api/tasks"), {id: task.id, title: title, body: body, due: when}, requestHeaders())
+        .then(() => close(true))
+        .catch(err => setError(`Kon de taak niet wijzigen (${err.response.data})`));
+      }
     }
-    close(true);
   }
 
   return (

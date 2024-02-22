@@ -1,43 +1,38 @@
 import React, {useContext, useState} from 'react';
 import axios from 'axios';
-import cfg from '../config.json';
 import {Link} from 'react-router-dom';
 import {AuthContext} from '../context/AuthContext.jsx';
 import {Input} from '../components/Input.jsx';
-import {RegistreerButton, SaveButton} from '../components/Button.jsx';
+import {RegistreerButton} from '../components/Button.jsx';
+import {urlBuilder} from '../helpers/UrlBuilder.js';
 
 const Registreer = () => {
   const [email, setEmail] = useState("");
   const [naam, setNaam] = useState("");
   const [password, setPassword] = useState("");
   const [nogmaals, setNogmaals] = useState("");
-  const [error, toggleError] = useState(false);
-  const [msg, setMsg] = useState("");
+  const [error, setError] = useState("");
   const {login} = useContext(AuthContext);
 
   async function handleSubmit(event) {
     event.preventDefault();
-    toggleError(false);
+    setError("");
 
     if (!password || !nogmaals || !naam || !email) {
-      toggleError(true);
-      setMsg("Alle velden zijn verplicht");
+      setError("Alle velden zijn verplicht");
     } else {
       if (password !== nogmaals) {
-        toggleError(true);
-        setMsg("Passwords zijn niet gelijk");
+        setError("Passwords zijn niet gelijk");
       } else {
         try {
-          const result = await axios.post(`${cfg.backend}/api/users`, {
+          const result = await axios.post(urlBuilder("/api/users"), {
             email: email,
             name: naam,
             password: password,
           });
           login(result.data.token);
         } catch (e) {
-          console.error(e);
-          setMsg(`Het registreren is mislukt: ${e.response.data}; probeer het opnieuw`);
-          toggleError(true);
+          setError(`Het registreren is mislukt: ${e.response.data}; probeer het opnieuw`);
         }
       }
     }
@@ -61,7 +56,7 @@ const Registreer = () => {
           <div className="form-row">
             <Input label="Nogmaals" type="password" name="nogmaals" handler={(e) => setNogmaals(e.target.value)}>{nogmaals}</Input>
           </div>
-          {error && <p className="error">{msg}</p>}
+          {error && <p className="error">{error}</p>}
           <div className="form-row">
             <RegistreerButton />
           </div>

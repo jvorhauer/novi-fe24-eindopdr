@@ -12,7 +12,7 @@ export const LoginButton = () => GenericButton("Login");
 
 export const RegistreerButton = () => GenericButton("Registreer");
 
-export const ResetButton = () => GenericButton("Laat maar", "reset-button");
+export const ResetButton = () => GenericButton("Laat maar", "reset-button", "reset");
 
 export const EditButton = ({ handler, title }) => {
   return (<button onClick={handler} className="edit-button" title={title}><i className="fas fa-edit"></i></button>);

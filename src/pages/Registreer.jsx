@@ -3,8 +3,8 @@ import axios from 'axios';
 import {Link} from 'react-router-dom';
 import {AuthContext} from '../context/AuthContext.jsx';
 import {Input} from '../components/Input.jsx';
-import {RegistreerButton} from '../components/Button.jsx';
 import {urlBuilder} from '../helpers/UrlBuilder.js';
+import {RegistreerButton} from '../components/Button.jsx';
 
 const Registreer = () => {
   const [email, setEmail] = useState("");
@@ -14,7 +14,7 @@ const Registreer = () => {
   const [error, setError] = useState("");
   const {login} = useContext(AuthContext);
 
-  async function handleSubmit(event) {
+  const handleSubmit = async event => {
     event.preventDefault();
     setError("");
 
@@ -24,19 +24,16 @@ const Registreer = () => {
       if (password !== nogmaals) {
         setError("Passwords zijn niet gelijk");
       } else {
-        try {
-          const result = await axios.post(urlBuilder("/api/users"), {
-            email: email,
-            name: naam,
-            password: password,
-          });
-          login(result.data.token);
-        } catch (e) {
-          setError(`Het registreren is mislukt: ${e.response.data}; probeer het opnieuw`);
-        }
+        axios.post(urlBuilder("/api/users"), {
+          email: email,
+          name: naam,
+          password: password,
+        })
+        .then(result => login(result.data.token))
+        .catch(err => setError(`Registreren is niet gelukt (${err.response.data}); probeer het opnieuw`));
       }
     }
-  }
+  };
 
   return (
     <section>
@@ -61,7 +58,6 @@ const Registreer = () => {
             <RegistreerButton />
           </div>
         </form>
-
         <p>Heb je al een account? <Link to="/login">Log in</Link></p>
       </dialog>
     </section>

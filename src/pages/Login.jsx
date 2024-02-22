@@ -12,14 +12,14 @@ const Login = () => {
   const [error, setError] = useState("");
   const {login} = useContext(AuthContext);
 
-  async function handleSubmit(event) {
+  const handleSubmit = async event => {
     event.preventDefault();
     setError("");
 
     axios.post(urlBuilder("/api/login"), {username: email, password: password})
     .then(result => login(result.data.token))
     .catch(err => setError(err.response.data))
-  }
+  };
 
   return (
     <section className="login-form">

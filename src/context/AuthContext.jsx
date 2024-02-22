@@ -2,12 +2,11 @@ import { createContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
-import cfg from '../config.json';
 import {urlBuilder} from '../helpers/UrlBuilder.js';
 
 export const AuthContext = createContext( {} );
 
-function AuthContextProvider({ children }) {
+const AuthContextProvider = ({ children }) => {
   const [isAuth, toggleIsAuth] = useState( {
     isAuth: false,
     user: null,
@@ -15,49 +14,9 @@ function AuthContextProvider({ children }) {
   } );
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      const decoded = jwt_decode( token );
-      void fetchUserData( decoded.sub, token );
-    } else {
-      toggleIsAuth({
-        isAuth: false,
-        user: null,
-        status: 'done',
-      });
-    }
-  }, []);
-
-  function login(jwt) {
-    localStorage.setItem('token', jwt);
-    const decoded = jwt_decode(jwt);
-    void fetchUserData(decoded.uid, jwt, "/taken");
-  }
-
-  function logout() {
-    localStorage.clear();
-    toggleIsAuth({
-      isAuth: false,
-      user: null,
-      status: 'done',
-    });
-    navigate('/login');
-  }
-
-  function requestHeaders() {
-    const token = localStorage.getItem( 'token' );
-    return {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      },
-    };
-  }
-
-  async function fetchUserData(id, token, redirectUrl) {
-    try {
-      const result = await axios.get(urlBuilder("/api/users/me"), requestHeaders());
+  const fetchUserData = async (id, token, redirectUrl) => {
+    axios.get(urlBuilder("/api/users/me"), requestHeaders())
+    .then(result => {
       toggleIsAuth( {
         ...isAuth,
         isAuth: true,
@@ -74,15 +33,56 @@ function AuthContextProvider({ children }) {
       if ( redirectUrl ) {
         navigate(redirectUrl);
       }
-    } catch (e) {
-      console.error(e);
-      toggleIsAuth( {
+    }).catch(err => {
+      console.error(err);
+      toggleIsAuth({
+        isAuth: false,
+        user: null,
+        status: 'done',
+      });
+    });
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decoded = jwt_decode( token );
+      void fetchUserData( decoded.sub, token );
+    } else {
+      toggleIsAuth({
         isAuth: false,
         user: null,
         status: 'done',
       });
     }
-  }
+  }, []);
+
+  const login = jwt => {
+    localStorage.setItem('token', jwt);
+    const decoded = jwt_decode(jwt);
+    void fetchUserData(decoded.uid, jwt, "/taken");
+  };
+
+  const logout = () => {
+    localStorage.clear();
+    toggleIsAuth({
+      isAuth: false,
+      user: null,
+      status: 'done',
+    });
+    navigate('/login');
+  };
+
+  const requestHeaders = () => {
+    const token = localStorage.getItem( 'token' );
+    return {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+    };
+  };
+
 
   const contextData = {
     ...isAuth,
@@ -96,6 +96,6 @@ function AuthContextProvider({ children }) {
       { isAuth.status === 'done' ? children : <p>Loading...</p> }
     </AuthContext.Provider>
   );
-}
+};
 
 export default AuthContextProvider;

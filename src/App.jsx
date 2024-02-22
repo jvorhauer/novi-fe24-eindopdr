@@ -8,9 +8,8 @@ import Registreer from './pages/Registreer.jsx';
 import {Taken} from './pages/Taken.jsx';
 import {Notities} from './pages/Notities.jsx';
 
-export default function App() {
+export default () => {
   const {isAuth} = useContext(AuthContext);
-
   return (
     <>
       <header>

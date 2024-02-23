@@ -21,6 +21,7 @@ form {
   display: block;
   padding-left: 20px;
   padding-right: 10px;
+  text-align: left;
 }
 .form-row input {
   width: 80%;
@@ -34,23 +35,6 @@ form {
   justify-content: flex-start;
 }
 
-.board {
-  display: flex;
-  justify-content: center;
-  margin-top: 50px;
-  gap: 20px;
-}
-
-.board .card {
-  background: #3F4447;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 3px;
-  width: 240px;
-  cursor: grab;
-  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-}
-
 .card:active {
   cursor: grabbing;
   opacity: .3;
@@ -60,34 +44,6 @@ form {
 .card.dragging {
   opacity: .3;
   transform: scale(.8);
-}
-
-.column {
-  padding: 10px;
-  background: #2c2c2c;
-  border: 2px solid #2c2c2c;
-  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-  min-width: 260px;
-}
-
-.column.column-TODO h2 {
-  background: #3498DB;
-}
-
-.column.column-DOING h2 {
-  background: #F39C12;
-}
-
-.column.column-REVIEW h2 {
-  background: grey;
-}
-
-.column.drop {
-  border: 2px dashed #FFF;
-}
-
-.column.drop article {
-  pointer-events: none;
 }
 
 h3 {
@@ -107,29 +63,6 @@ h2 {
   font-size: 21px;
   pointer-events: none;
   user-select: none;
-}
-
-.notes {
-  margin-top: 20px;
-  width: 100%;
-  display: flex;
-}
-.notes aside {
-  flex: 0 0 25%;
-  border: grey solid 1px;
-  padding: 10px;
-}
-.notes aside .card {
-  background: #2c2c2c;
-  padding: 10px;
-  margin-bottom: 5px;
-  text-align: left;
-}
-.notes aside .card:hover {
-  cursor: pointer;
-}
-.notes .separator {
-  flex: 0 0 1%;
 }
 
 article {

@@ -4,6 +4,7 @@ import {NoteDialog} from '../components/NoteDialog.jsx';
 import {EditButton, NewButton, RemoveButton} from '../components/Button.jsx';
 import {AuthContext} from '../context/AuthContext.jsx';
 import {urlBuilder} from '../helpers/UrlBuilder.js';
+import './Notities.css';
 
 export const Notities = () => {
   const {requestHeaders} = useContext(AuthContext);

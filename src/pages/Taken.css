@@ -1,0 +1,44 @@
+.board {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  gap: 20px;
+}
+
+.board .card {
+  background: #3F4447;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 3px;
+  width: 240px;
+  cursor: grab;
+  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.column {
+  padding: 10px;
+  background: #2c2c2c;
+  border: 2px solid #2c2c2c;
+  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  min-width: 260px;
+}
+
+.column.column-TODO h2 {
+  background: #3498DB;
+}
+
+.column.column-DOING h2 {
+  background: #F39C12;
+}
+
+.column.column-REVIEW h2 {
+  background: grey;
+}
+
+.column.drop {
+  border: 2px dashed #FFF;
+}
+
+.column.drop article {
+  pointer-events: none;
+}

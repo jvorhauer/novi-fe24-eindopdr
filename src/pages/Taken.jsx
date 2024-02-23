@@ -4,6 +4,7 @@ import {AuthContext} from '../context/AuthContext.jsx';
 import {EditButton, NewButton, RemoveButton} from '../components/Button.jsx';
 import {TaskDialog} from '../components/TaskDialog.jsx';
 import {urlBuilder} from '../helpers/UrlBuilder.js';
+import './Taken.css';
 
 export const Taken = () => {
   const {requestHeaders} = useContext(AuthContext);

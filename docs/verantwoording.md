@@ -1,4 +1,13 @@
-# Verantwoording
+---
+title: Verantwoording
+date: 2024-02-23
+author: Jurjen Vorhauer, 800009793
+email: j.vorhauer@novi-education.nl
+---
+
+* [Technische Keuzes](#technische-keuzes)
+* [Limitaties](#limitaties)
+* [Persoonlijke Opmerkingen](#enige-persoonlijke-opmerkingen-achteraf)
 
 ## Technische Keuzes
 
@@ -50,6 +59,16 @@ project vanaf GitHub en voor het downloaden van een release van NodeJS + npm; en
 5. Op dit moment hebben taken wel een deadline, maar daar wordt verder niets actief mee gedaan. Het zou bijvoorbeeld handig zijn als er dan een email 
    verstuurd wordt.
 
+#### Mogelijke toekomstige verbeteringen
+
+* relatie tussen taken en notities
+* omzetten van een taak naar een notitie en vice versa
+* tags om taken en notities te kunnen groeperen of in ieder geval visueel beter te kunnen identificeren
+* sociale functies: zoeken naar andere gebruikers en volgen van die gebruikers, waardoor publieke notities te zien zijn
+* taak kunnen voorzien van prioriteit
+* notitie kunnen voorzien van een vlag om aan te geven dat die notitie publiek (zie ook "sociale functies" hierboven) of privé is.
+* deadline-gerelateerde berichten versturen (zie punt 5. van de functionele beperkingen hierboven)
+
 ### Technisch
 
 1. De enige formattering in de tekst-velden van notitie en taak zijn regelovergangen (linebreaks), maar om die goed weer te geven moet je in React nogal wat zoeken, maar er blijkt een nette css oplossing voor te zijn;
@@ -58,12 +77,9 @@ project vanaf GitHub en voor het downloaden van een release van NodeJS + npm; en
 
 ## enige persoonlijke opmerkingen achteraf
 
-Het deel Figma-prototype heb ik expres overgeslagen: kost veel tijd en levert minder dan 5% van het eind-cijfer op, aangezien wireframes + figma in totaal 5%
-oplevert. Wel geprobeerd om er een design systeem in te krijgen zodat in ieder geval kleuren, typografie en elementaire elementen enigszins voorgekookt zijn, maar dat
-had ik nog van een aparte cursus Figma van Novi overgehouden. Daarbij komt: ik ben geen grafische vormgever of designer. Dat is een vak apart.
+Het deel wireframes-op-papier en Figma-prototype heb ik expres overgeslagen: kost veel tijd en levert 5% van het eind-cijfer op. 
+Ik ben geen grafische vormgever of designer. Dat is een vak apart. Daar komt bij dat het Agile werken voor backend services (mijn dagelijks werkend bestaan) een stricte ontwerp naar ontwikkel methodiek erg onaantrekkelijk maakt. Zo nu en dan mag ik een frontend maken, meestal van interne, administratieve aard, en dan ga ik regelmatig naar de gebruikers met de werkende frontend en laat die zien. Daardoor krijg ik feedback over het daadwerkelijke product en niet op een niet- of nauwelijks werkend geheel. Vaak gaan de vragen voor dat soort interne tools ook helemaal niet over de layout maar veel meer over de werking van de app. Functie over vorm, zeg maar.
 
-Ik heb grote moeite gehad om de 50 gevraagde functionele en niet-functionele eisen vol te krijgen.
+Ik heb grote moeite gehad om de 50 gevraagde functionele en niet-functionele eisen vol te krijgen. Wellicht heb ik dat deel niet correct geïnterpreteerd?
 
-Zoals eerder al aangegeven ben ik geen vormgever, waardoor layout zaken erg veel tijd en vallen-en-opstaan-energie kosten.
-
-En, last-but-not-least, het is onzettend onhandig om je enige gebruiker én de developer van de applicatie te zijn...
+En, last-but-not-least, het is onzettend onhandig om je enige gebruiker én de developer van de applicatie te zijn... feedback is daardoor heel eenzijdig en erg subjectief.

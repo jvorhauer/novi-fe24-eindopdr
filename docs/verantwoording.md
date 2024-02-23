@@ -36,7 +36,8 @@ mooie en aansprekende websites en webapplicaties.
 
 ### Algemeen
 
-Werkt alleen met Internet verbinding, aangezien backend daar ergens draait; geen offline mogelijkheid.
+Werkt alleen met Internet verbinding, aangezien backend daar ergens draait; geen offline mogelijkheid. Maar dat geldt ook voor het clonen van het 
+project vanaf GitHub en voor het downloaden van een release van NodeJS + npm; en ook voor het downloaden van bijvoorbeeld het React framework.. 
 
 ### Functioneel
 
@@ -44,8 +45,10 @@ Werkt alleen met Internet verbinding, aangezien backend daar ergens draait; geen
 2. Een taak is opzettelijk inhoudelijk beperkt opgezet. Dit is in lijn met het BaseCamp gedachtengoed: zorg dat de tool geen doel op zich wordt, waarmee ook gezorgd
    wordt dat de functioneliteit niet ondergesneeud wordt door vele velden;
 3. Een notitie is om dezelfde reden bescheiden gehouden. Het risico dat veel verschillende invoer/data om steeds meer functionaliteit vraagt is te groot (zie Jira);
-4. Gebruikers leven nu in het backend systeem van NoPaN. Gegeven de grote hoeveelheden Google, GitHub, Microsoft, etc. bestaande accounts zou OAuth als autenticatie
+4. Gebruikers leven nu in het backend systeem. Gegeven de grote hoeveelheden Google, GitHub, Microsoft, etc. bestaande accounts zou OAuth als autenticatie
    mechanisme wellicht makkelijker en zelfs drempelverlagend kunnen zijn.
+5. Op dit moment hebben taken wel een deadline, maar daar wordt verder niets actief mee gedaan. Het zou bijvoorbeeld handig zijn als er dan een email 
+   verstuurd wordt.
 
 ### Technisch
 
@@ -62,3 +65,5 @@ had ik nog van een aparte cursus Figma van Novi overgehouden. Daarbij komt: ik b
 Ik heb grote moeite gehad om de 50 gevraagde functionele en niet-functionele eisen vol te krijgen.
 
 Zoals eerder al aangegeven ben ik geen vormgever, waardoor layout zaken erg veel tijd en vallen-en-opstaan-energie kosten.
+
+En, last-but-not-least, het is onzettend onhandig om je enige gebruiker én de developer van de applicatie te zijn...

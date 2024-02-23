@@ -10,6 +10,7 @@ nav {
 
 nav ul {
   list-style: none;
+  align-items: center;
 }
 nav ul span {
   margin: 0;

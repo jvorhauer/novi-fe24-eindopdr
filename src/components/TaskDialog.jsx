@@ -5,6 +5,7 @@ import {ResetButton, SaveButton} from './Button.jsx';
 import axios from 'axios';
 import {urlBuilder} from '../helpers/UrlBuilder.js';
 import {futureDateTime} from '../helpers/DateTimeHelper.js';
+import TagDecoder from '../helpers/TagDecoder.js';
 
 export const TaskDialog = ({ task, setUpdated }) => {
   const {requestHeaders} = useContext(AuthContext);
@@ -30,12 +31,12 @@ export const TaskDialog = ({ task, setUpdated }) => {
     } else {
       if (!task.id) {
         axios.post(urlBuilder("/api/tasks"), {title: title, body: body, due: when}, requestHeaders())
-        .then(() => close(true))
-        .catch(err => setError(`Kon de nieuwe taak niet opslaan (${err.response.data})`));
+          .then(() => close(true))
+          .catch(err => setError(`Kon de nieuwe taak niet opslaan (${err.response.data})`));
       } else {
         axios.put(urlBuilder("/api/tasks"), {id: task.id, title: title, body: body, due: when}, requestHeaders())
-        .then(() => close(true))
-        .catch(err => setError(`Kon de taak niet wijzigen (${err.response.data})`));
+          .then(() => close(true))
+          .catch(err => setError(`Kon de taak niet wijzigen (${err.response.data})`));
       }
     }
   }
@@ -44,9 +45,9 @@ export const TaskDialog = ({ task, setUpdated }) => {
     <dialog id={!task.id ? "new-task" : task.id}>
       <h2>{!task.id ? "Nieuwe" : "Wijzig"} Taak</h2>
       <form method="dialog" onSubmit={handleSubmit} onReset={() => close(false)}>
-        <Input label="Titel" name="title" type="text" handler={(e) => setTitle(e.target.value)}>{title}</Input>
+        <Input label="Titel" name="title" type="text" handler={(e) => setTitle(e.target.value)}>{TagDecoder(title)}</Input>
         <Input label="Deadline" name="due" type="datetime-local" handler={(e) => setDue(e.target.value)}>{due}</Input>
-        <InputArea label="Tekst" name="body" handler={(e) => setBody(e.target.value)} rows="19" value={body}></InputArea>
+        <InputArea label="Tekst" name="body" handler={(e) => setBody(e.target.value)} rows="19" value={TagDecoder(body)}></InputArea>
         <div className="form-row">
           <ResetButton />
           <SaveButton />

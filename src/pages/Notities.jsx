@@ -5,6 +5,7 @@ import {EditButton, NewButton, RemoveButton} from '../components/Button.jsx';
 import {AuthContext} from '../context/AuthContext.jsx';
 import {urlBuilder} from '../helpers/UrlBuilder.js';
 import './Notities.css';
+import TagDecoder from '../helpers/TagDecoder.js';
 
 export const Notities = () => {
   const {requestHeaders} = useContext(AuthContext);
@@ -44,8 +45,8 @@ export const Notities = () => {
     <section className="notes">
       <aside>
         {cards.map(card => (
-          <div key={card.id} className="card" onClick={() => setSelected(card.id)}>
-            <h3>{card.title}</h3>
+          <div key={card.id} className="card" onClick={() => setSelected(card.id)} draggable="false">
+            <h3>{TagDecoder(card.title)}</h3>
             <p><i>{card.created}</i></p>
           </div>
         ))}
@@ -61,13 +62,13 @@ export const Notities = () => {
         {cards.filter(card => card.id === selected).map(card => (
           <span key={card.id}>
             <NoteDialog note={card} setUpdated={setUpdated} />
-            <h2>{card.title}</h2>
+            <h2>{TagDecoder(card.title)}</h2>
             <p>
               <i>{card.created}</i>
               <EditButton handler={() => showDialog(card.id)} title="Wijzig notitie"/>
               <RemoveButton handler={() => remove(card.id)} title="Verwijder notitie"/>
             </p>
-            <p className="p_wrap">{card.body}</p>
+            <p className="p_wrap">{TagDecoder(card.body)}</p>
           </span>
         ))}
       </article>

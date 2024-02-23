@@ -42,3 +42,12 @@
 .column.drop article {
   pointer-events: none;
 }
+
+.deadline {
+  background-color: lightgreen;
+  color: black;
+  padding: 1px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-size: smaller;
+}

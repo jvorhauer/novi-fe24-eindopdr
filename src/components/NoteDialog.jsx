@@ -4,6 +4,7 @@ import {ResetButton, SaveButton} from './Button.jsx';
 import axios from 'axios';
 import {AuthContext} from '../context/AuthContext.jsx';
 import {urlBuilder} from '../helpers/UrlBuilder.js';
+import TagDecoder from '../helpers/TagDecoder.js';
 
 export const NoteDialog = ({ note, setUpdated }) => {
   const {requestHeaders} = useContext(AuthContext);
@@ -21,12 +22,12 @@ export const NoteDialog = ({ note, setUpdated }) => {
     event.preventDefault();
     if (!note.id) {
       axios.post(urlBuilder("/api/notes"), {title: title, body: body}, requestHeaders())
-      .then(() => close(true))
-      .catch(err => setError(`Kon de nieuwe notitie niet opslaan (${err.response.data})`));
+        .then(() => close(true))
+        .catch(err => setError(`Kon de nieuwe notitie niet opslaan (${err.response.data})`));
     } else {
       axios.put(urlBuilder("/api/notes"), {id: note.id, title: title, body: body}, requestHeaders())
-      .then(() => close(true))
-      .catch(err => setError(`Kon de notitie niet wijzigen (${err.response.data})`));
+        .then(() => close(true))
+        .catch(err => setError(`Kon de notitie niet wijzigen (${err.response.data})`));
     }
   }
 
@@ -34,8 +35,8 @@ export const NoteDialog = ({ note, setUpdated }) => {
     <dialog id={!note.id ? "new-note" : note.id}>
       <h2>{!note.id ? "Nieuwe" : "Wijzig"} Notitie</h2>
       <form method="dialog" onSubmit={handleSubmit} onReset={() => close(false)}>
-        <Input label="Titel" name="title" type="text" handler={(e) => setTitle(e.target.value)}>{title}</Input>
-        <InputArea label="Tekst" name="body" handler={(e) => setBody(e.target.value)} rows="21" value={body}></InputArea>
+        <Input label="Titel" name="title" type="text" handler={(e) => setTitle(e.target.value)}>{TagDecoder(title)}</Input>
+        <InputArea label="Tekst" name="body" handler={(e) => setBody(e.target.value)} rows="21" value={TagDecoder(body)}></InputArea>
         <div className="form-row">
           <ResetButton />
           <SaveButton />

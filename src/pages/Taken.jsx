@@ -5,6 +5,7 @@ import {EditButton, NewButton, RemoveButton} from '../components/Button.jsx';
 import {TaskDialog} from '../components/TaskDialog.jsx';
 import {urlBuilder} from '../helpers/UrlBuilder.js';
 import './Taken.css';
+import TagDecoder from '../helpers/TagDecoder.js';
 
 export const Taken = () => {
   const {requestHeaders} = useContext(AuthContext);
@@ -99,13 +100,13 @@ export const Taken = () => {
             {cards.filter(card => card.status === state.id).map(card =>
               <article key={card.id} className="card" draggable={"true"} onDragStart={drag} data-id={card.id}>
                 <TaskDialog task={card} setUpdated={setUpdated}/>
-                <h3>{card.title}</h3>
+                <h3>{TagDecoder(card.title)}</h3>
                 <p>
-                  <i>{card.due.substring(0, 16)}</i>
+                  <span className="deadline"><i className="fas fa-clock"></i> {card.due.substring(0, 16)}</span>
                   <EditButton handler={() => showDialog(card.id)} title="Taak wijzigen"/>
                   <RemoveButton handler={() => remove(card.id)} title="Taak verwijderen"/>
                 </p>
-                <p className="p_wrap">{card.body}</p>
+                <p className="p_wrap">{TagDecoder(card.body)}</p>
               </article>)
             }
             {(state.id === "TODO") ?

@@ -5,39 +5,36 @@ nav {
   align-items: center;
   border: grey solid 1px;
   border-radius: 3px;
-  max-height: 100px;
-}
-
-nav ul {
-  list-style: none;
-  align-items: center;
-}
-nav ul span {
-  margin: 0;
   padding: 0;
 }
 
 nav .logo {
-  display: flex;
+  height: 40px;
   font-size: xx-large;
+  padding-left: 20px;
 }
 
-nav ul li {
-  padding-right: 10px;
-  padding-left: 10px;
-  display: inline;
-  vertical-align: middle;
+.nav-links a {
+  text-decoration: none;
+  margin-left: 1.5rem;
 }
-nav ul li button {
-  background-color: transparent;
-  color: white;
-  font-size: 1.2em;
+.nav-links a:hover {
+  text-decoration: underline;
+}
+
+.nav-icons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+}
+.nav-icons .weather {
+  height: 70px;
 }
 
 .selected-menu-item {
-  text-decoration: green wavy underline;
+  text-decoration: green underline;
   font-weight: bolder;
-  font-size: 1.8em;
 }
 .normal-menu-item {
   font-weight: normal;

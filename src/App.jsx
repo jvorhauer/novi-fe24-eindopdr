@@ -26,6 +26,9 @@ export default () => {
           </Routes>
         </div>
       </main>
+      <footer>
+        &copy; 2024
+      </footer>
     </>
   );
 }

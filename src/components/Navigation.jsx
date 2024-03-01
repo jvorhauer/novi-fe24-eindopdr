@@ -1,51 +1,87 @@
-import {useContext} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {AuthContext} from '../context/AuthContext.jsx';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import "./Navigation.css";
 import {Gravatar} from './Gravatar.jsx';
-import {NavButton} from './Button.jsx';
+import axios from 'axios';
+import cfg from "../config.json";
 
 const Navigation = () => {
   const {isAuth, logout, user} = useContext(AuthContext);
-  const navigate = useNavigate();
   const location = useLocation();
+  const [icon, setIcon] = useState("");
+  const [condition, setCondition] = useState("");
   const {pathname} = location;
   const selected = "selected-menu-item";
   const normal = "normal-menu-item";
 
   const hilite = (here) => (pathname === here ? selected : normal);
 
+  useEffect(() => {
+    axios.get("http://ip-api.com/json",)
+      .then(geo => {
+        const coords = `lat=${geo.data.lat}&lon=${geo.data.lon}`;
+        axios.get(`https://api.openweathermap.org/data/2.5/weather?${coords}&appid=${cfg.owmapikey}&lang=nl`)
+          .then(weather => {
+            setIcon(`https://openweathermap.org/img/wn/${weather.data.weather[0].icon}@2x.png`);
+            setCondition(`${geo.data.city}: ${weather.data.weather[0].description}`);
+          })
+          .catch(err => console.error("weather failed:", err))
+      })
+      .catch(err => console.error("geo failed:", err));
+  });
+
+  const NavItem = ({ target, children, ...rest}) => {
+    return (
+      <Link to={target} className={hilite(target)} {...rest}>{children}</Link>
+    )
+  }
+  const Weather = () => {
+    return (<img src={icon} className="weather" alt={condition} title={condition} />);
+  }
+
+  const Logo = () => {
+    return (
+      <Link to="/taken" className="logo">
+        {isAuth ?
+          <Gravatar hash={user.gravatar} naam={user.username} /> :
+          <i className="fas fa-user-edit" title="Novi FrontEnd EindOpdracht 2024"></i>
+        }
+      </Link>
+    );
+  }
+  const LoggedInLinks = () => {
+    return (
+      <>
+        <div className="nav-links">
+          <NavItem target="/taken">Taken</NavItem>
+          <NavItem target="/notities">Notities</NavItem>
+          <NavItem target="#" onClick={() => logout()}>Afmelden</NavItem>
+        </div>
+        <div className="nav-icons">
+          <Weather />
+        </div>
+      </>
+    );
+  }
+  const AnonymousLinks = () => {
+    return (
+      <>
+        <div className="nav-links">
+          <NavItem target="/login">Log in</NavItem>
+          <NavItem target="/registreer">Registreer</NavItem>
+        </div>
+        <div className="nav-icons">
+          <Weather />
+        </div>
+      </>
+    );
+  }
+
   return (
     <nav>
-      <ul>
-        <li className="logo">
-          <Link to="/taken">
-            <i className="fas fa-user-edit" title="Novi FrontEnd EindOpdracht 2024"></i>
-          </Link>
-        </li>
-      </ul>
-      {isAuth ?
-        <ul>
-          <li>
-            <NavButton handler={() => navigate("/taken")} klass={hilite("/taken")}>Taken</NavButton>
-          </li>
-          <li>
-            <button className={hilite("/notities")} onClick={() => navigate("/notities")}>Notities</button>
-          </li>
-          <li>
-            <Gravatar hash={user.gravatar} naam={user.username} handler={() => logout()}/>
-          </li>
-        </ul>
-        :
-        <ul>
-          <li>
-            <button className={hilite("/login")} onClick={() => navigate("/login")}>Log in</button>
-        </li>
-        <li>
-          <button className={hilite("/registreer")} onClick={() => navigate("/registreer")}>Registreer</button>
-        </li>
-      </ul>
-    }
+      <Logo />
+      {isAuth ? <LoggedInLinks /> : <AnonymousLinks />}
     </nav>
   );
 }

@@ -1,40 +1,41 @@
-import { createContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {createContext, useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import {urlBuilder} from '../helpers/UrlBuilder.js';
 
-export const AuthContext = createContext( {} );
+export const AuthContext = createContext({});
 
-const AuthContextProvider = ({ children }) => {
-  const [isAuth, toggleIsAuth] = useState( {
+const AuthContextProvider = ({children}) => {
+  const [isAuth, toggleIsAuth] = useState({
     isAuth: false,
     user: null,
     status: 'pending',
-  } );
+  });
   const navigate = useNavigate();
 
   const fetchUserData = async (id, token, redirectUrl) => {
     axios.get(urlBuilder("/api/users/me"), requestHeaders())
-    .then(result => {
-      toggleIsAuth( {
-        ...isAuth,
-        isAuth: true,
-        user: {
-          username: result.data.name,
-          email: result.data.email,
-          id: result.data.id,
-          joined: result.data.joined,
-          gravatar: result.data.gravatar,
-        },
-        status: 'done',
-      } );
+      .then(result => {
+        toggleIsAuth({
+          ...isAuth,
+          isAuth: true,
+          user: {
+            username: result.data.name,
+            email: result.data.email,
+            id: result.data.id,
+            joined: result.data.joined,
+            gravatar: result.data.gravatar,
+          },
+          status: 'done',
+        });
 
-      if ( redirectUrl ) {
-        navigate(redirectUrl);
-      }
-    }).catch(err => {
+        if (redirectUrl) {
+          navigate(redirectUrl);
+        }
+      }).catch(err => {
       console.error(err);
+      localStorage.clear();
       toggleIsAuth({
         isAuth: false,
         user: null,
@@ -46,8 +47,8 @@ const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      const decoded = jwt_decode( token );
-      void fetchUserData( decoded.sub, token );
+      const decoded = jwt_decode(token);
+      void fetchUserData(decoded.sub, token);
     } else {
       toggleIsAuth({
         isAuth: false,
@@ -74,7 +75,7 @@ const AuthContextProvider = ({ children }) => {
   };
 
   const requestHeaders = () => {
-    const token = localStorage.getItem( 'token' );
+    const token = localStorage.getItem('token');
     return {
       headers: {
         "Content-Type": "application/json",
@@ -92,8 +93,8 @@ const AuthContextProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={ contextData }>
-      { isAuth.status === 'done' ? children : <p>Loading...</p> }
+    <AuthContext.Provider value={contextData}>
+      {isAuth.status === 'done' ? children : <p>Loading...</p>}
     </AuthContext.Provider>
   );
 };

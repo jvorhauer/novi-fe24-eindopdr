@@ -7,8 +7,8 @@ import {Input} from '../components/Input.jsx';
 import {urlBuilder} from '../helpers/UrlBuilder.js';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const {login} = useContext(AuthContext);
 
@@ -17,8 +17,8 @@ const Login = () => {
     setError("");
 
     axios.post(urlBuilder("/api/login"), {username: email, password: password})
-    .then(result => login(result.data.token))
-    .catch(err => setError(err.response.data))
+      .then(result => login(result.data.token))
+      .catch(err => setError(err.response.data))
   };
 
   return (

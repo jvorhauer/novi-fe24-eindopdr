@@ -1,3 +1,4 @@
 {
-  "backend": "https://enna.miruvor.nl"
+  "backend": "http://localhost:8080",
+  "owmapikey": "1bac3e5d283e9c85413109806c2f8b0e"
 }

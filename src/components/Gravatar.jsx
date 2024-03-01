@@ -1,11 +1,12 @@
 import './Gravatar.css';
 
 export const Gravatar = ({hash, naam, handler}) => {
+  const desc = `log ${naam} uit`;
   return (
     <img className="gravatar"
          src={`https://gravatar.com/avatar/${hash}`}
-         title={`log ${naam} uit`}
-         alt="Gravatar"
+         title={desc}
+         alt={desc}
          onClick={handler}></img>
   );
 }

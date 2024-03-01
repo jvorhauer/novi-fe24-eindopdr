@@ -1,8 +1,31 @@
 #root {
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
   width: 1200px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  margin-top: 10px;
+  height: 50px;
+  width: 100%;
+}
+
+footer {
+  height: 50px;
+  min-height: 50px;
+  background-color: white;
+  color: black;
+  padding-top: 10px;
+}
+
+main {
+  padding-top: 60px;
+  flex: 1 0 auto;
+  width: 100%;
+  padding-bottom: 10px;
 }
 
 form {
@@ -24,7 +47,7 @@ form {
   text-align: left;
 }
 .form-row input {
-  width: 80%;
+  width: 70%;
 }
 .form-row button {
   margin-left: 15px;
@@ -33,22 +56,6 @@ form {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-}
-
-.card:active {
-  cursor: grabbing;
-  opacity: .3;
-  transform: rotate(15deg);
-}
-
-.card.dragging {
-  opacity: .3;
-  transform: scale(.8);
-}
-
-h3 {
-  font-size: 21px;
-  margin: 0;
 }
 
 .card:last-child {
@@ -63,6 +70,11 @@ h2 {
   font-size: 21px;
   pointer-events: none;
   user-select: none;
+}
+
+h3 {
+  font-size: 18px;
+  margin: 0;
 }
 
 article {

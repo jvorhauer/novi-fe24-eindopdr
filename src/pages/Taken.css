@@ -15,12 +15,37 @@
   transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
+.board .card:active {
+  cursor: grabbing;
+  opacity: .3;
+  transform: rotate(15deg);
+}
+
+.board .card.dragging {
+  opacity: .3;
+  transform: scale(.8);
+}
+
 .column {
   padding: 10px;
   background: #2c2c2c;
   border: 2px solid #2c2c2c;
   transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
   min-width: 260px;
+}
+.remover {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+.remove-area {
+  width: 200px;
+  height: 200px;
+  align-items: center;
+}
+.remove-area i {
+  padding-top: 60px;
+  font-size: 5em;
 }
 
 .column.column-TODO h2 {
@@ -43,11 +68,12 @@
   pointer-events: none;
 }
 
-.deadline {
+.datetime {
   background-color: lightgreen;
   color: black;
   padding: 1px;
   border: 1px solid transparent;
   border-radius: 4px;
   font-size: smaller;
+  width: max-content;
 }

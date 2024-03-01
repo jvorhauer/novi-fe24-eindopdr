@@ -6,6 +6,7 @@ import {AuthContext} from '../context/AuthContext.jsx';
 import {urlBuilder} from '../helpers/UrlBuilder.js';
 import './Notities.css';
 import TagDecoder from '../helpers/TagDecoder.js';
+import Loader from '../components/loader/Loader.jsx';
 
 export const Notities = () => {
   const {requestHeaders} = useContext(AuthContext);
@@ -13,67 +14,83 @@ export const Notities = () => {
   const [error, setError] = useState("");
   const [selected, setSelected] = useState("");
   const [updated, setUpdated] = useState(false);
+  const [loading, setLoading] = useState(false);
   const emptyNote = {id: undefined, title: '', body: ''};
 
   const showDialog = (elementId) => document.getElementById(elementId).showModal();
 
   const remove = (id) => {
-    if (confirm("Weet je zeker dat je de notitie wil verwijderen?")) {
+    setLoading(true);
+    if (confirm("Are you sure you want to delete this note?")) {
       axios.delete(urlBuilder(`/api/notes/${id}`), requestHeaders())
-        .then(() => setUpdated(true))
-        .catch(error => setError(`Kon de notitie niet verwijderen (${error})`));
+        .then(() => {
+          setUpdated(true);
+          setLoading(false);
+        })
+        .catch(error => {
+          setLoading(false);
+          setError(`Could not delete note: ${error}`);
+        });
     }
   }
 
   useEffect(() => {
-    axios.get(urlBuilder("/api/users/notes"), requestHeaders())
-      .then(result => {
-        setCards(result.data);
-        if (!selected && result.data && result.data.length > 0) {
-          setSelected(result.data[0].id);
-        }
-      })
-      .catch(error => setError(`Ophalen van Notities is niet gelukt (${error})`));
+    setLoading(true);
+    axios.get(urlBuilder("/api/users/notes"), requestHeaders()).then(result => {
+      setLoading(false);
+      setCards(result.data);
+      if (!selected && result.data && result.data.length > 0) {
+        setSelected(result.data[0].id);
+      }
+    }).catch(error => {
+      setLoading(false);
+      setError(`Retrieval of notes failed: ${error}`);
+    });
 
     return () => {
       setUpdated(false);
     }
   }, [updated]);
 
-  return (
-    <>
-    <section className="notes">
-      <aside>
-        {cards.map(card => (
-          <div key={card.id} className="card" onClick={() => setSelected(card.id)} draggable="false">
-            <h3>{TagDecoder(card.title)}</h3>
-            <p><i>{card.created}</i></p>
+  const Notes = () => {
+    return (
+      <section className="notes">
+        <aside>
+          {cards.map(card => (
+            <div key={card.id} className="card" onClick={() => setSelected(card.id)} draggable="false">
+              <h3>{TagDecoder(card.title)} <RemoveButton handler={() => remove(card.id)} title="Verwijder Notitie" /></h3>
+              <p className="datetime">
+                <i className="fas fa-calendar-plus" title="created"></i> <i>{card.created}</i><br />
+              </p>
+            </div>
+          ))}
+          <div key="new" className="card">
+            <NoteDialog note={emptyNote} setUpdated={setUpdated} />
+            <p><NewButton handler={() => showDialog("new-note")} title="New Note" /></p>
           </div>
-        ))}
-        <div key="new" className="card">
-          <NoteDialog note={emptyNote} setUpdated={setUpdated} />
-          <p><NewButton handler={() => showDialog("new-note")} title="Maak nieuwe notitie" /></p>
-        </div>
-      </aside>
-
-      <div className="separator"></div>
-
-      <article>
-        {cards.filter(card => card.id === selected).map(card => (
-          <span key={card.id}>
+        </aside>
+        <div className="separator"></div>
+        <article>
+          {cards.filter(card => card.id === selected).map(card => (
+            <span key={card.id}>
             <NoteDialog note={card} setUpdated={setUpdated} />
             <h2>{TagDecoder(card.title)}</h2>
-            <p>
-              <i>{card.created}</i>
-              <EditButton handler={() => showDialog(card.id)} title="Wijzig notitie"/>
-              <RemoveButton handler={() => remove(card.id)} title="Verwijder notitie"/>
-            </p>
+                <i className="fas fa-calendar-plus" title="created"></i> <i title="created">{card.created}</i>
+
+                <i className="fas fa-arrow-alt-circle-up" title="last updated"></i> <i>{card.updated}</i>
+                <EditButton handler={() => showDialog(card.id)} title="Update Note">update</EditButton>
             <p className="p_wrap">{TagDecoder(card.body)}</p>
           </span>
-        ))}
-      </article>
-    </section>
-    {error && <section><p className="error">{error}</p></section>}
-  </>
+          ))}
+        </article>
+      </section>
+    );
+  }
+
+  return (
+    <>
+      {loading ? <Loader /> : <Notes />}
+      {error && <section><p className="error">{error}</p></section>}
+    </>
   );
 }

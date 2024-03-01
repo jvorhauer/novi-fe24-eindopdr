@@ -58,15 +58,18 @@ export const Notities = () => {
         <aside>
           {cards.map(card => (
             <div key={card.id} className="card" onClick={() => setSelected(card.id)} draggable="false">
-              <h3>{TagDecoder(card.title)} <RemoveButton handler={() => remove(card.id)} title="Verwijder Notitie" /></h3>
-              <p className="datetime">
+              <h3>{TagDecoder(card.title)}</h3>
+              <span className="smaller">
                 <i className="fas fa-calendar-plus" title="created"></i> <i>{card.created}</i><br />
-              </p>
+              </span>
+              <span className="smaller">
+                {TagDecoder(card.body.slice(0, 42))}...
+              </span>
             </div>
           ))}
           <div key="new" className="card">
             <NoteDialog note={emptyNote} setUpdated={setUpdated} />
-            <p><NewButton handler={() => showDialog("new-note")} title="New Note" /></p>
+            <p className="p_new"><NewButton handler={() => showDialog("new-note")} title="New Note" /></p>
           </div>
         </aside>
         <div className="separator"></div>
@@ -75,10 +78,16 @@ export const Notities = () => {
             <span key={card.id}>
             <NoteDialog note={card} setUpdated={setUpdated} />
             <h2>{TagDecoder(card.title)}</h2>
-                <i className="fas fa-calendar-plus" title="created"></i> <i title="created">{card.created}</i>
-
-                <i className="fas fa-arrow-alt-circle-up" title="last updated"></i> <i>{card.updated}</i>
-                <EditButton handler={() => showDialog(card.id)} title="Update Note">update</EditButton>
+            <div className="note-meta">
+              <span>
+                <i className="fas fa-calendar-plus" title="gemaakt"></i> <i title="created">{card.created}</i>
+              </span>
+              <span>
+                <i className="fas fa-arrow-alt-circle-up" title="laatst gewijzigd"></i> <i>{card.updated}</i>
+              </span>
+              <EditButton handler={() => showDialog(card.id)} title="Wijzig Notitie" />
+              <RemoveButton handler={() => remove(card.id)} title="Verwijder Notitie" />
+            </div>
             <p className="p_wrap">{TagDecoder(card.body)}</p>
           </span>
           ))}

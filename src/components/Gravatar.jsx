@@ -1,12 +1,14 @@
 import './Gravatar.css';
 
 export const Gravatar = ({hash, naam, handler}) => {
-  const desc = `log ${naam} uit`;
+  const desc = `Aangemeld als ${naam}`;
   return (
-    <img className="gravatar"
-         src={`https://gravatar.com/avatar/${hash}`}
-         title={desc}
-         alt={desc}
-         onClick={handler}></img>
+    <div className="hover-text">
+      <img className="gravatar"
+           src={`https://gravatar.com/avatar/${hash}`}
+           alt={desc}
+           onClick={handler}></img>
+      <span className="tooltip-text tooltip-bottom">{desc}</span>
+    </div>
   );
 }

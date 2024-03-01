@@ -1,7 +1,7 @@
 import {useContext, useEffect, useState} from 'react';
 import axios from 'axios';
 import {AuthContext} from '../context/AuthContext.jsx';
-import {EditButton, NewButton, RemoveButton} from '../components/Button.jsx';
+import {EditButton, NewButton} from '../components/Button.jsx';
 import {TaskDialog} from '../components/TaskDialog.jsx';
 import {urlBuilder} from '../helpers/UrlBuilder.js';
 import './Taken.css';

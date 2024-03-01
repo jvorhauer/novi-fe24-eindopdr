@@ -27,11 +27,8 @@
   opacity: 1;
   transform: none;
 }
-.notes .separator {
-  flex: 0 0 1%;
-}
-.notes article {
-  overflow: scroll;
+.notes aside .card .p_new {
+  text-align: center;
 }
 .notes aside .card h3 {
   margin: 0;
@@ -39,14 +36,23 @@
   height: fit-content;
 }
 
-article span table {
-  width: 100%;
-  border-bottom: grey 1px dashed;
+.notes .separator {
+  flex: 0 0 1%;
 }
-td {
-  white-space: nowrap;
-  height: fit-content;
+
+.notes article {
+  overflow: scroll;
 }
+.notes article .note-meta {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  border: 1px solid grey;
+}
+.smaller {
+  font-size: 0.7em;
+}
+
 .fa-calendar-plus {
   padding-right: 2px;
 }

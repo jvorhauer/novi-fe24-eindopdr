@@ -21,7 +21,7 @@ export const ResetButton = () => {
 }
 
 export const EditButton = ({ handler, title, children }) => {
-  return (<GenericButton className="edit-button" title={title} onClick={handler}><i className="fas fa-edit"></i>&nbsp;{children}</GenericButton>);
+  return (<GenericButton className="edit-button" title={title} onClick={handler}><i className="fas fa-edit"></i> {children}</GenericButton>);
 }
 
 export const RemoveButton = ({ handler, title, children }) => {

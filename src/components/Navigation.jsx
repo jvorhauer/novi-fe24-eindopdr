@@ -1,6 +1,6 @@
 import {useContext, useEffect, useState} from 'react';
 import {AuthContext} from '../context/AuthContext.jsx';
-import {Link, useLocation, useNavigate} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import "./Navigation.css";
 import {Gravatar} from './Gravatar.jsx';
 import axios from 'axios';
@@ -16,15 +16,21 @@ const Navigation = () => {
   const normal = "normal-menu-item";
 
   const hilite = (here) => (pathname === here ? selected : normal);
+  const calcTemp = (tempK) => Math.round((tempK - 273.15) * 10) / 10;
 
   useEffect(() => {
     axios.get("http://ip-api.com/json",)
       .then(geo => {
         const coords = `lat=${geo.data.lat}&lon=${geo.data.lon}`;
         axios.get(`https://api.openweathermap.org/data/2.5/weather?${coords}&appid=${cfg.owmapikey}&lang=nl`)
+          .then(weather => weather.data)
           .then(weather => {
-            setIcon(`https://openweathermap.org/img/wn/${weather.data.weather[0].icon}@2x.png`);
-            setCondition(`${geo.data.city}: ${weather.data.weather[0].description}`);
+            console.log("weather", weather);
+            const temps = `🌡 ${calcTemp(weather.main.temp)} / ${calcTemp(weather.main.feels_like)}\u00b0C`;
+            const where = `${geo.data.city} (${weather.sys.country})`;
+            const wind = `\u2634 ${weather.wind.deg}\u00b0 ${weather.wind.speed} m/s`;
+            setIcon(`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`);
+            setCondition(`${where}\n${weather.weather[0].description}\n${temps}\n${wind}`);
           })
           .catch(err => console.error("weather failed:", err))
       })
@@ -37,7 +43,12 @@ const Navigation = () => {
     )
   }
   const Weather = () => {
-    return (<img src={icon} className="weather" alt={condition} title={condition} />);
+    return (
+      <div className="hover-text">
+        <img src={icon} className="weather" alt="Het weer" />
+        <span className="tooltip-text tooltip-bottom p_wrap">{condition}</span>
+      </div>
+    );
   }
 
   const Logo = () => {
@@ -50,31 +61,23 @@ const Navigation = () => {
       </Link>
     );
   }
+
   const LoggedInLinks = () => {
     return (
-      <>
-        <div className="nav-links">
-          <NavItem target="/taken">Taken</NavItem>
-          <NavItem target="/notities">Notities</NavItem>
-          <NavItem target="#" onClick={() => logout()}>Afmelden</NavItem>
-        </div>
-        <div className="nav-icons">
-          <Weather />
-        </div>
-      </>
+      <div className="nav-links">
+        <NavItem target="/taken">Taken</NavItem>
+        <NavItem target="/notities">Notities</NavItem>
+        <NavItem target="/login" onClick={() => logout()}>Afmelden</NavItem>
+      </div>
     );
   }
+
   const AnonymousLinks = () => {
     return (
-      <>
-        <div className="nav-links">
-          <NavItem target="/login">Log in</NavItem>
-          <NavItem target="/registreer">Registreer</NavItem>
-        </div>
-        <div className="nav-icons">
-          <Weather />
-        </div>
-      </>
+      <div className="nav-links">
+        <NavItem target="/login">Log in</NavItem>
+        <NavItem target="/registreer">Registreer</NavItem>
+      </div>
     );
   }
 
@@ -82,6 +85,9 @@ const Navigation = () => {
     <nav>
       <Logo />
       {isAuth ? <LoggedInLinks /> : <AnonymousLinks />}
+      <div className="nav-icons">
+        <Weather />
+      </div>
     </nav>
   );
 }

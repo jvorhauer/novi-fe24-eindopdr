@@ -12,13 +12,13 @@
 
 .edit-button {
   background: transparent;
-  width: 10px;
+  width: max-content;
   margin-left: 3px;
 }
 
 .remove-button {
   background: transparent;
-  width: 10px;
+  width: max-content;
   margin-left: 5px;
 }
 

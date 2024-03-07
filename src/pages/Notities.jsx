@@ -19,18 +19,14 @@ export const Notities = () => {
 
   const showDialog = (elementId) => document.getElementById(elementId).showModal();
 
-  const remove = (id) => {
-    setLoading(true);
-    if (confirm("Are you sure you want to delete this note?")) {
+  const remove = (id, title) => {
+    if (confirm(`Bevestig verwijderen van "${title}"?`)) {
       axios.delete(urlBuilder(`/api/notes/${id}`), requestHeaders())
         .then(() => {
+          setSelected("");
           setUpdated(true);
-          setLoading(false);
         })
-        .catch(error => {
-          setLoading(false);
-          setError(`Could not delete note: ${error}`);
-        });
+        .catch(err => setError(`Kon de notitie niet verwijderen: ${err}`));
     }
   }
 
@@ -48,6 +44,7 @@ export const Notities = () => {
     });
 
     return () => {
+      setLoading(false);
       setUpdated(false);
     }
   }, [updated]);
@@ -86,7 +83,7 @@ export const Notities = () => {
                 <i className="fas fa-arrow-alt-circle-up" title="laatst gewijzigd"></i> <i>{card.updated}</i>
               </span>
               <EditButton handler={() => showDialog(card.id)} title="Wijzig Notitie" />
-              <RemoveButton handler={() => remove(card.id)} title="Verwijder Notitie" />
+              <RemoveButton handler={() => remove(card.id, TagDecoder(card.title))} title="Verwijder Notitie" />
             </div>
             <p className="p_wrap">{TagDecoder(card.body)}</p>
           </span>

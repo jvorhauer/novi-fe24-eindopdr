@@ -25,13 +25,15 @@ export const EditButton = ({ handler, title, children }) => {
 }
 
 export const RemoveButton = ({ handler, title, children }) => {
-  return (<GenericButton className="remove-button" title={title} onClick={handler}><i className="fas fa-trash-alt"></i>&nbsp;{children}</GenericButton>);
+  return (<GenericButton className="remove-button" title={title} onClick={handler}>
+    <i className="fas fa-trash-alt"></i>&nbsp;{children}
+  </GenericButton>);
 }
 
 export const NewButton = ({ handler, title }) => {
-  return (<GenericButton className="new-button" title={title} onClick={handler}><i className="fas fa-plus"></i>&nbsp;{title}</GenericButton>);
-}
-
-export const NavButton = ({ handler, klass, children}) => {
-  return (<GenericButton className={klass} type="button" onClick={handler}>{children}</GenericButton>);
+  return (
+    <GenericButton className="new-button" title={title} onClick={handler}>
+      <i className="fas fa-plus"></i>&nbsp;{title}
+    </GenericButton>
+  );
 }

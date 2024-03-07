@@ -3,7 +3,7 @@ nav {
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  border: grey solid 1px;
+  border: var(--content-border) solid 1px;
   border-radius: 3px;
   padding: 0;
 }
@@ -18,10 +18,15 @@ nav {
 
 .nav-links a {
   text-decoration: none;
-  margin-left: 1.5rem;
+  padding: 5px;
+  margin-left: 3px;
 }
 .nav-links a:hover {
-  text-decoration: underline;
+  background: transparent;
+  padding: 4px;
+  border: 1px solid var(--button-border);
+  border-radius: 5px;
+  box-shadow: 0 0 10px var(--neon-shadow), 0 0 40px var(--neon-shadow), 0 0 80px var(--neon-shadow);
 }
 
 .nav-icons {
@@ -35,7 +40,6 @@ nav {
 }
 
 .selected-menu-item {
-  text-decoration: green underline;
   font-weight: bolder;
 }
 .normal-menu-item {
@@ -47,10 +51,10 @@ nav {
   position: absolute;
   z-index: 2;
   width: max-content;
-  color: black;
+  color: var(--tooltip-color);
   font-size: 12px;
-  background-color: #ece3b4;
-  border-radius: 10px;
+  background-color: var(--tooltip-background);
+  border-radius: 6px;
   padding: 10px 15px 10px 15px;
 }
 
@@ -67,12 +71,12 @@ nav {
   visibility: visible;
 }
 
-#top {
+.tooltip-top {
   top: -40px;
   left: -50%;
 }
 
-#top::before {
+.tooltip-top::before {
   top: 80%;
   left: 45%;
 }
@@ -86,22 +90,22 @@ nav {
   left: 45%;
 }
 
-#left {
+.tooltip-left {
   top: -8px;
   right: 120%;
 }
 
-#left::before {
+.tooltip-left::before {
   top: 35%;
   left: 94%;
 }
 
-#right {
+.tooltip-right {
   top: -8px;
   left: 120%;
 }
 
-#right::before {
+.tooltip-right::before {
   top: 35%;
   left: -2%;
 }
@@ -110,6 +114,10 @@ nav {
   position: relative;
   display: inline-block;
   margin: 40px;
-  font-family: Arial;
+  font-family: Helvetica, sans-serif;
   text-align: center;
+}
+
+.direction span {
+  margin-left: 7px;
 }

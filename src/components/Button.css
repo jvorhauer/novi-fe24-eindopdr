@@ -1,32 +1,48 @@
 .default-button {
   margin-top: 5px;
-  background-color: blue;
+  background-color: transparent;
+  border-color: var(--button-border);
+  color: var(--button-color);
   width: 120px;
 }
 
 .reset-button {
   margin-top: 5px;
-  background-color: red;
+  background-color: transparent;
+  border-color: crimson;
+  color: crimson;
   width: 120px;
+}
+.reset-button:hover {
+  border-color: red;
+  color: red;
+  box-shadow: 0 0 10px red, 0 0 40px red, 0 0 80px red;
 }
 
 .edit-button {
   background: transparent;
+  border-color: transparent;
+  color: white;
   width: max-content;
   margin-left: 3px;
 }
 
 .remove-button {
   background: transparent;
+  border-color: transparent;
+  color: white;
   width: max-content;
   margin-left: 5px;
+}
+.remove-button:hover {
+  border-color: red;
+  color: red;
+  box-shadow: 0 0 10px red, 0 0 40px red, 0 0 80px red;
 }
 
 .new-button {
   margin-top: 10px;
   margin-bottom: 10px;
-  background-color: green;
-}
-.new-button:hover {
-  color: darkblue;
+  border-color: #255784;
+  color: #2196f3;
 }

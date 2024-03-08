@@ -1,7 +1,7 @@
 import {useContext, useEffect, useState} from 'react';
 import axios from 'axios';
 import {AuthContext} from '../context/AuthContext.jsx';
-import {EditButton, NewButton} from '../components/Button.jsx';
+import {EditButton, NewButton} from '../components/buttons/Button.jsx';
 import {TaskDialog} from '../components/TaskDialog.jsx';
 import {urlBuilder} from '../helpers/UrlBuilder.js';
 import './Taken.css';
@@ -122,7 +122,7 @@ export const Taken = () => {
                 </article>)
               }
               {(state.id === "TODO") ?
-                <div className="card">
+                <div className="new-card">
                   <TaskDialog task={{title: '', body: '', due: ''}} setUpdated={setUpdated} />
                   <NewButton handler={() => showDialog("new-task")} title="Nieuwe Taak" />
                 </div> : <></>

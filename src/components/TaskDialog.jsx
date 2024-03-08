@@ -1,7 +1,7 @@
 import {useContext, useState} from 'react';
 import {AuthContext} from '../context/AuthContext.jsx';
-import {Input, InputArea} from './Input.jsx';
-import {ResetButton, SaveButton} from './Button.jsx';
+import {Input, InputArea} from './input/Input.jsx';
+import {ResetButton, SaveButton} from './buttons/Button.jsx';
 import axios from 'axios';
 import {urlBuilder} from '../helpers/UrlBuilder.js';
 import {futureDateTime} from '../helpers/DateTimeHelper.js';
@@ -44,7 +44,7 @@ export const TaskDialog = ({ task, setUpdated }) => {
   return (
     <dialog id={!task.id ? "new-task" : task.id}>
       <h2>{!task.id ? "Nieuwe" : "Wijzig"} Taak</h2>
-      <form method="dialog" onSubmit={handleSubmit} onReset={() => close(false)}>
+      <form method="dialog" onSubmit={handleSubmit} onReset={() => close(false)} className="login-form" >
         <Input label="Titel" name="title" type="text" handler={(e) => setTitle(e.target.value)}>{TagDecoder(title)}</Input>
         <Input label="Deadline" name="due" type="datetime-local" handler={(e) => setDue(e.target.value)}>{due}</Input>
         <InputArea label="Tekst" name="body" handler={(e) => setBody(e.target.value)} rows="19" value={TagDecoder(body)}></InputArea>

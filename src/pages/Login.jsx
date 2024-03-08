@@ -2,8 +2,8 @@ import React, {useContext, useState} from 'react';
 import {AuthContext} from '../context/AuthContext.jsx';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
-import {LoginButton} from '../components/Button.jsx';
-import {Input} from '../components/Input.jsx';
+import {LoginButton} from '../components/buttons/Button.jsx';
+import {Input} from '../components/input/Input.jsx';
 import {urlBuilder} from '../helpers/UrlBuilder.js';
 
 const Login = () => {
@@ -22,17 +22,13 @@ const Login = () => {
   };
 
   return (
-    <section className="login-form">
+    <section>
       <dialog open>
         <h2>Aanmelden</h2>
-        <form id="login-form" onSubmit={handleSubmit}>
+        <form className="login-form" id="login-form" onSubmit={handleSubmit}>
           <div className="form-separator"><p></p></div>
-          <div className="form-row">
-            <Input label="Emailadres" type="email" name="email" handler={(e) => setEmail(e.target.value)}>{email}</Input>
-          </div>
-          <div className="form-row">
-            <Input label="Wachtwoord" type="password" name="password" handler={(e) => setPassword(e.target.value)}>{password}</Input>
-          </div>
+          <Input label="Emailadres" type="email" name="email" handler={(e) => setEmail(e.target.value)}>{email}</Input>
+          <Input label="Wachtwoord" type="password" name="password" handler={(e) => setPassword(e.target.value)}>{password}</Input>
           <div>
             {error && <p className="error">{error}</p>}
           </div>

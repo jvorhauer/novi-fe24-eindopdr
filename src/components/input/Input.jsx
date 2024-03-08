@@ -10,7 +10,7 @@ export const Input = ({label, type, name, handler, children}) => {
              name={name}
              value={children}
              required="required"
-             onChange={handler}/>
+             onChange={handler} />
     </>
   );
 }

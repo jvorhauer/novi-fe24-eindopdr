@@ -5,6 +5,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
 header {
@@ -14,15 +15,18 @@ header {
 }
 
 footer {
-  height: 50px;
-  min-height: 50px;
-  background-color: white;
-  color: black;
+  height: 32px;
+  min-height: 32px;
+  background-color: var(--column-background);
+  color: white;
   padding-top: 10px;
+  font-size: 0.8em;
+  flex-grow: 0;
+  flex-shrink: 0;
 }
 
 main {
-  padding-top: 60px;
+  padding-top: 20px;
   flex: 1 0 auto;
   width: 100%;
   padding-bottom: 10px;
@@ -63,7 +67,7 @@ form {
 }
 
 h2 {
-  background: green;
+  background: var(--card-background);
   margin: -10px -10px 10px;
   padding: 4px 10px;
   font-family: Helvetica, sans-serif;
@@ -81,7 +85,7 @@ article {
   flex: 1 0 auto;
   padding: 10px;
   text-align: left;
-  border: grey solid 1px;
+  border: var(--card-background) solid 1px;
   width: 70%;
 }
 
@@ -92,7 +96,7 @@ dialog[open] {
   max-height: 600px;
 }
 .login-form {
-  align-items: center;
+  text-align: left;
 }
 
 .p_wrap {

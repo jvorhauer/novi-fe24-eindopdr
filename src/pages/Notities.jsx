@@ -1,7 +1,7 @@
 import {useContext, useEffect, useState} from 'react';
 import axios from 'axios';
 import {NoteDialog} from '../components/NoteDialog.jsx';
-import {EditButton, NewButton, RemoveButton} from '../components/Button.jsx';
+import {EditButton, NewButton, RemoveButton} from '../components/buttons/Button.jsx';
 import {AuthContext} from '../context/AuthContext.jsx';
 import {urlBuilder} from '../helpers/UrlBuilder.js';
 import './Notities.css';

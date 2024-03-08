@@ -1,11 +1,11 @@
 import {useContext, useEffect, useRef, useState} from 'react';
-import {AuthContext} from '../context/AuthContext.jsx';
+import {AuthContext} from '../../context/AuthContext.jsx';
 import {Link, useLocation} from 'react-router-dom';
 import "./Navigation.css";
-import {Gravatar} from './Gravatar.jsx';
+import {Gravatar} from '../gravatar/Gravatar.jsx';
 import axios from 'axios';
-import cfg from "../config.json";
-import {conditionHelper, tempHelper, windDirectionHelper, windSpeedHelper} from '../helpers/WeatherHelpers.js';
+import cfg from "../../config.json";
+import {conditionHelper, tempHelper, windDirectionHelper, windSpeedHelper} from '../../helpers/WeatherHelpers.js';
 
 const Navigation = () => {
   const {isAuth, logout, user} = useContext(AuthContext);
@@ -76,12 +76,12 @@ const Navigation = () => {
 
   const Logo = () => {
     return (
-      <Link to="/taken" className="logo">
+      <div className="logo">
         {isAuth ?
           <Gravatar hash={user.gravatar} naam={user.username} /> :
           <i className="fas fa-user-edit" title="Novi FrontEnd EindOpdracht 2024"></i>
         }
-      </Link>
+      </div>
     );
   }
 

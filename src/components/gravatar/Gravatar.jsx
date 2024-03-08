@@ -8,7 +8,7 @@ export const Gravatar = ({hash, naam, handler}) => {
            src={`https://gravatar.com/avatar/${hash}`}
            alt={desc}
            onClick={handler}></img>
-      <span className="tooltip-text tooltip-bottom">{desc}</span>
+      <span className="tooltip-text tooltip-right">{desc}</span>
     </div>
   );
 }

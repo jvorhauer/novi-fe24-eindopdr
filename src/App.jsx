@@ -3,7 +3,7 @@ import {Route, Routes, Navigate} from 'react-router-dom';
 import {AuthContext} from './context/AuthContext.jsx';
 import Login from './pages/Login.jsx';
 import {useContext} from 'react';
-import Navigation from './components/Navigation.jsx';
+import Navigation from './components/navigation/Navigation.jsx';
 import Registreer from './pages/Registreer.jsx';
 import {Taken} from './pages/Taken.jsx';
 import {Notities} from './pages/Notities.jsx';
@@ -27,7 +27,7 @@ export default () => {
         </div>
       </main>
       <footer>
-        &copy; 2024
+        &copy; 2024, NOVI en Jurjen Vorhauer
       </footer>
     </>
   );

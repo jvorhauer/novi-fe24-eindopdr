@@ -1,6 +1,6 @@
 import {useContext, useState} from 'react';
-import {Input, InputArea} from './Input.jsx';
-import {ResetButton, SaveButton} from './Button.jsx';
+import {Input, InputArea} from './input/Input.jsx';
+import {ResetButton, SaveButton} from './buttons/Button.jsx';
 import axios from 'axios';
 import {AuthContext} from '../context/AuthContext.jsx';
 import {urlBuilder} from '../helpers/UrlBuilder.js';
@@ -34,7 +34,7 @@ export const NoteDialog = ({ note, setUpdated }) => {
   return (
     <dialog id={!note.id ? "new-note" : note.id}>
       <h2>{!note.id ? "Nieuwe" : "Wijzig"} Notitie</h2>
-      <form method="dialog" onSubmit={handleSubmit} onReset={() => close(false)}>
+      <form method="dialog" onSubmit={handleSubmit} onReset={() => close(false)} className="login-form">
         <Input label="Titel" name="title" type="text" handler={(e) => setTitle(e.target.value)}>{TagDecoder(title)}</Input>
         <InputArea label="Tekst" name="body" handler={(e) => setBody(e.target.value)} rows="21" value={TagDecoder(body)}></InputArea>
         <div className="form-row">

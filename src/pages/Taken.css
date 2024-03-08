@@ -6,11 +6,11 @@
 }
 
 .board .card {
-  background: #3F4447;
-  padding: 10px;
-  margin-bottom: 10px;
+  background: var(--card-background);
+  padding: 6px;
+  margin-bottom: 6px;
   border-radius: 3px;
-  width: 240px;
+  width: 250px;
   cursor: grab;
   transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
@@ -26,10 +26,20 @@
   transform: scale(.8);
 }
 
+.new-card {
+  background: var(--card-background);
+  padding: 6px;
+  margin-bottom: 6px;
+  border: grey solid 1px;
+  border-radius: 3px;
+  width: 250px;
+  transform: none;
+}
+
 .column {
-  padding: 10px;
-  background: #2c2c2c;
-  border: 2px solid #2c2c2c;
+  padding: 6px;
+  background: var(--column-background);
+  border: 2px solid var(--card-background);
   transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
   min-width: 260px;
 }
@@ -39,25 +49,19 @@
   margin-top: 50px;
 }
 .remove-area {
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 180px;
   align-items: center;
+  border: none;
 }
 .remove-area i {
   padding-top: 60px;
-  font-size: 5em;
+  font-size: 3em;
 }
 
-.column.column-TODO h2 {
-  background: #3498DB;
-}
-
-.column.column-DOING h2 {
-  background: #F39C12;
-}
-
-.column.column-REVIEW h2 {
-  background: grey;
+.column h2 {
+  background: var(--card-background);
+  width: 100%;
 }
 
 .column.drop {

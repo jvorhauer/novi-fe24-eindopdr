@@ -2,9 +2,9 @@ import React, {useContext, useState} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 import {AuthContext} from '../context/AuthContext.jsx';
-import {Input} from '../components/Input.jsx';
+import {Input} from '../components/input/Input.jsx';
 import {urlBuilder} from '../helpers/UrlBuilder.js';
-import {RegistreerButton} from '../components/Button.jsx';
+import {RegistreerButton} from '../components/buttons/Button.jsx';
 
 const Registreer = () => {
   const [email, setEmail] = useState("");
@@ -39,20 +39,12 @@ const Registreer = () => {
     <section>
       <dialog open>
         <h2>Registreer</h2>
-        <form onSubmit={handleSubmit}>
+        <form className="login-form" onSubmit={handleSubmit}>
           <div className="form-separator"><p></p></div>
-          <div className="form-row">
-            <Input label="Emailadres" type="email" name="email" handler={(e) => setEmail(e.target.value)}>{email}</Input>
-          </div>
-          <div className="form-row">
-            <Input label="Naam" type="text" name="naam" handler={(e) => setNaam(e.target.value)}>{naam}</Input>
-          </div>
-          <div className="form-row">
-            <Input label="Wachtwoord" type="password" name="password" handler={(e) => setPassword(e.target.value)}>{password}</Input>
-          </div>
-          <div className="form-row">
-            <Input label="Nogmaals" type="password" name="nogmaals" handler={(e) => setNogmaals(e.target.value)}>{nogmaals}</Input>
-          </div>
+          <Input label="Emailadres" type="email" name="email" handler={(e) => setEmail(e.target.value)}>{email}</Input>
+          <Input label="Naam" type="text" name="naam" handler={(e) => setNaam(e.target.value)}>{naam}</Input>
+          <Input label="Wachtwoord" type="password" name="password" handler={(e) => setPassword(e.target.value)}>{password}</Input>
+          <Input label="Nogmaals" type="password" name="nogmaals" handler={(e) => setNogmaals(e.target.value)}>{nogmaals}</Input>
           {error && <p className="error">{error}</p>}
           <div className="form-row">
             <RegistreerButton />

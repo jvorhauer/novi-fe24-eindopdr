@@ -1,8 +1,4 @@
-export const windDirectionHelper = (data) => {
-  if (!data) {
-    return "??";
-  }
-  const deg = data.wind.deg;
+export const windDirectionHelper = (deg) => {
   if (deg >  11.25 && deg <=  33.75) return "NNO";
   if (deg >  37.75 && deg <=  56.25) return "NO";
   if (deg >  65.25 && deg <=  78.25) return "ONO";
@@ -21,21 +17,36 @@ export const windDirectionHelper = (data) => {
   return "N";
 }
 
-export const windSpeedHelper = (data) => {
-  return `${data.wind.speed} m/s`;
+export const beaufortHelper = (speed) => {
+  if (speed <= 0.2)  return 0;
+  if (speed <= 1.5)  return 1;
+  if (speed <= 3.3)  return 2;
+  if (speed <= 5.4)  return 3;
+  if (speed <= 7.9)  return 4;
+  if (speed <= 10.7) return 5;
+  if (speed <= 13.8) return 6;
+  if (speed <= 17.1) return 7;
+  if (speed <= 20.7) return 8;
+  if (speed <= 24.4) return 9;
+  if (speed <= 28.4) return 10;
+  if (speed <= 32.6) return 11;
+  return 12;
 }
 
+export const windSpeedHelper = (speed) => `${round(speed * 3.6)} km/u`
 
-const calcTemp = (tempK) => Math.round((tempK - 273.15) * 10) / 10;
+const round = (nr) => Math.round(nr  * 10) / 10;
+const calcTemp = (tempK) => round(tempK - 273.15);
 
 export const conditionHelper = (data) => {
-  if (!data) {
-    return "???";
-  }
   const where = `${data.name} (${data.sys.country})`;
-  return `${where}\n${data.weather[0].description}\n`
+  return `${where}\n(${whenHelper(data.dt)})\n${data.weather[0].description}\n`
 }
 
 export const tempHelper = (data) => {
   return `${calcTemp(data.main.temp)} (${calcTemp(data.main.feels_like)}) \u00b0C`;
+}
+
+export const whenHelper = (timestamp) => {
+  return new Date(timestamp * 1000).toLocaleTimeString().slice(0, 5);
 }

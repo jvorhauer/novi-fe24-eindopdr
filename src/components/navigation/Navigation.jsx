@@ -2,10 +2,10 @@ import {useContext, useEffect, useRef, useState} from 'react';
 import {AuthContext} from '../../context/AuthContext.jsx';
 import {Link, useLocation} from 'react-router-dom';
 import "./Navigation.css";
-import {Gravatar} from '../gravatar/Gravatar.jsx';
+import Gravatar from '../gravatar/Gravatar.jsx';
 import axios from 'axios';
 import cfg from "../../config.json";
-import {conditionHelper, tempHelper, windDirectionHelper, windSpeedHelper} from '../../helpers/WeatherHelpers.js';
+import {beaufortHelper, conditionHelper, tempHelper, windDirectionHelper, windSpeedHelper} from '../../helpers/WeatherHelpers.js';
 
 const Navigation = () => {
   const {isAuth, logout, user} = useContext(AuthContext);
@@ -52,8 +52,9 @@ const Navigation = () => {
       return (<></>);
     }
     const icon = `https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`;
+    const wdeg = weather.wind.deg > 180 ? weather.wind.deg - 180 : weather.wind.deg + 180;
     const arrowStyle = {
-      transform: `rotate(${weather.wind.deg}deg)`
+      transform: `rotate(${wdeg}deg)`
     }
     return (
       <div className="hover-text">
@@ -64,8 +65,9 @@ const Navigation = () => {
           <div className="compass">
             <div className="direction">
               <p>
-                <i className="fas fa-arrow-up" style={arrowStyle}></i> {windDirectionHelper(weather)}
-                <span>{windSpeedHelper(weather)}</span>
+                <i className="fas fa-arrow-up" style={arrowStyle}></i> {windDirectionHelper(weather.wind.deg)}
+                {beaufortHelper(weather.wind.speed)}
+                <span>{windSpeedHelper(weather.wind.speed)}</span>
               </p>
             </div>
           </div>

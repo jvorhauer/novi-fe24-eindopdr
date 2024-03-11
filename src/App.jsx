@@ -7,6 +7,7 @@ import Navigation from './components/navigation/Navigation.jsx';
 import Registreer from './pages/Registreer.jsx';
 import {Taken} from './pages/Taken.jsx';
 import {Notities} from './pages/Notities.jsx';
+import AppVersion from './components/AppVersion.jsx';
 
 export default () => {
   const {isAuth} = useContext(AuthContext);
@@ -27,7 +28,7 @@ export default () => {
         </div>
       </main>
       <footer>
-        &copy; 2024, NOVI en Jurjen Vorhauer
+        &copy; 2024 - <AppVersion />
       </footer>
     </>
   );

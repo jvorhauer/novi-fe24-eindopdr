@@ -9,7 +9,7 @@
   background: var(--card-background);
   padding: 6px;
   margin-bottom: 6px;
-  border-radius: 3px;
+  border-radius: 6px;
   width: 250px;
   cursor: grab;
   transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
@@ -30,8 +30,7 @@
   background: var(--card-background);
   padding: 6px;
   margin-bottom: 6px;
-  border: grey solid 1px;
-  border-radius: 3px;
+  border-radius: 6px;
   width: 250px;
   transform: none;
 }

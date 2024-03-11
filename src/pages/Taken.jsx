@@ -48,15 +48,16 @@ export const Taken = () => {
     } else {
       const updatedState = cards.map(card => {
         if (card.id === id) {
-          card.status = column
-          axios.put(urlBuilder("/api/tasks"), {id: card.id, status: card.status}, requestHeaders())
-            .catch(error => setError(`Kon de status van de Taak ${id} niet wijzigen (${error})`));
+          if (card.status !== column) {
+            card.status = column
+            axios.put(urlBuilder("/api/tasks"), {id: card.id, status: card.status}, requestHeaders())
+              .catch(error => setError(`Kon de status van de Taak ${id} niet wijzigen (${error})`));
+          }
         }
         return card;
       });
       setCards(updatedState);
     }
-    setUpdated(true);
   }
 
   const allowDrop = event => event.preventDefault();

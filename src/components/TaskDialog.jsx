@@ -14,10 +14,9 @@ export const TaskDialog = ({ task, setUpdated }) => {
   const [due, setDue] = useState(!task.due ? futureDateTime() : task.due);
   const [error, setError] = useState("");
   const elementId = !task.id ? "new-task" : task.id;
-  const dialog = document.getElementById(elementId);
 
   const close = (mark) => {
-    dialog.close();
+    document.getElementById(elementId).close();
     setUpdated(mark);
   }
 
@@ -44,10 +43,10 @@ export const TaskDialog = ({ task, setUpdated }) => {
   return (
     <dialog id={!task.id ? "new-task" : task.id}>
       <h2>{!task.id ? "Nieuwe" : "Wijzig"} Taak</h2>
-      <form method="dialog" onSubmit={handleSubmit} onReset={() => close(false)} className="login-form" >
+      <form method="dialog" onSubmit={handleSubmit} onReset={() => close(false)} className="form">
         <Input label="Titel" name="title" type="text" handler={(e) => setTitle(e.target.value)}>{TagDecoder(title)}</Input>
         <Input label="Deadline" name="due" type="datetime-local" handler={(e) => setDue(e.target.value)}>{due}</Input>
-        <InputArea label="Tekst" name="body" handler={(e) => setBody(e.target.value)} rows="19" value={TagDecoder(body)}></InputArea>
+        <InputArea label="Tekst" name="body" handler={(e) => setBody(e.target.value)} value={TagDecoder(body)}></InputArea>
         <div className="form-row">
           <ResetButton />
           <SaveButton />

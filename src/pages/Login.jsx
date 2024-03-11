@@ -25,7 +25,7 @@ const Login = () => {
     <section>
       <dialog open>
         <h2>Aanmelden</h2>
-        <form className="login-form" id="login-form" onSubmit={handleSubmit}>
+        <form className="form" id="login-form" onSubmit={handleSubmit}>
           <div className="form-separator"><p></p></div>
           <Input label="Emailadres" type="email" name="email" handler={(e) => setEmail(e.target.value)}>{email}</Input>
           <Input label="Wachtwoord" type="password" name="password" handler={(e) => setPassword(e.target.value)}>{password}</Input>

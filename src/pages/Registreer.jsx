@@ -39,7 +39,7 @@ const Registreer = () => {
     <section>
       <dialog open>
         <h2>Registreer</h2>
-        <form className="login-form" onSubmit={handleSubmit}>
+        <form className="form" onSubmit={handleSubmit}>
           <div className="form-separator"><p></p></div>
           <Input label="Emailadres" type="email" name="email" handler={(e) => setEmail(e.target.value)}>{email}</Input>
           <Input label="Naam" type="text" name="naam" handler={(e) => setNaam(e.target.value)}>{naam}</Input>

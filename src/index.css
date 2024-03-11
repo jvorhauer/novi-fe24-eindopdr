@@ -1,19 +1,15 @@
 :root {
   font-family: "Montserrat", sans-serif;
+  font-size: 16px;
   line-height: 1.3;
   font-weight: 400;
-  font-size: 1.0em;
   font-style: normal;
-  font-optical-styling: auto;
 
   color-scheme: only dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
 
   font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 
   --link-color: #2196f3;
   --button-background: #1a1a1a;
@@ -25,6 +21,9 @@
   --content-border: grey;
   --column-background: #2C2C2C;
   --card-background: #3F4447;
+  --input-background: #3A3939;
+  --input-shadow-top: #FFF;
+  --input-shadow-bottom: #A5A5A5;
 }
 
 body, html {
@@ -54,7 +53,7 @@ button {
   border: 1px solid transparent;
   padding: 0.3em;
   margin-left: 0.1em;
-  font-size: 1em;
+  font-size: 16px;
   font-weight: 500;
   background-color: #1a1a1a;
   cursor: pointer;

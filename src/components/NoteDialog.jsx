@@ -34,9 +34,9 @@ export const NoteDialog = ({ note, setUpdated }) => {
   return (
     <dialog id={!note.id ? "new-note" : note.id}>
       <h2>{!note.id ? "Nieuwe" : "Wijzig"} Notitie</h2>
-      <form method="dialog" onSubmit={handleSubmit} onReset={() => close(false)} className="login-form">
+      <form method="dialog" onSubmit={handleSubmit} onReset={() => close(false)} className="form">
         <Input label="Titel" name="title" type="text" handler={(e) => setTitle(e.target.value)}>{TagDecoder(title)}</Input>
-        <InputArea label="Tekst" name="body" handler={(e) => setBody(e.target.value)} rows="21" value={TagDecoder(body)}></InputArea>
+        <InputArea label="Tekst" name="body" handler={(e) => setBody(e.target.value)} value={TagDecoder(body)}></InputArea>
         <div className="form-row">
           <ResetButton />
           <SaveButton />

@@ -1,6 +1,7 @@
 import './Gravatar.css';
+import PropTypes from 'prop-types';
 
-export const Gravatar = ({hash, naam, handler}) => {
+function Gravatar({ hash, naam, handler }) {
   const desc = `Aangemeld als ${naam}`;
   return (
     <div className="hover-text">
@@ -12,3 +13,11 @@ export const Gravatar = ({hash, naam, handler}) => {
     </div>
   );
 }
+
+Gravatar.propTypes = {
+  hash: PropTypes.string,
+  naam: PropTypes.string,
+  handler: PropTypes.any
+}
+
+export default Gravatar;

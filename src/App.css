@@ -17,6 +17,7 @@ footer {
   height: 32px;
   min-height: 32px;
   background-color: var(--column-background);
+  border: var(--card-background) solid 1px;
   color: white;
   padding-top: 10px;
   font-size: 15px;

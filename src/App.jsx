@@ -9,12 +9,12 @@ import {Taken} from './pages/Taken.jsx';
 import {Notities} from './pages/Notities.jsx';
 import AppVersion from './components/AppVersion.jsx';
 
-export default () => {
+const App = () => {
   const {isAuth} = useContext(AuthContext);
   return (
     <>
       <header>
-        <Navigation/>
+        <Navigation />
       </header>
       <main>
         <div className="content">
@@ -28,8 +28,10 @@ export default () => {
         </div>
       </main>
       <footer>
-        &copy; 2024 - <AppVersion />
+        <AppVersion />
       </footer>
     </>
   );
 }
+
+export default App;

@@ -1,5 +1,4 @@
 import './Gravatar.css';
-import PropTypes from 'prop-types';
 
 function Gravatar({ hash, naam, handler }) {
   const desc = `Aangemeld als ${naam}`;
@@ -12,12 +11,6 @@ function Gravatar({ hash, naam, handler }) {
       <span className="tooltip-text tooltip-right">{desc}</span>
     </div>
   );
-}
-
-Gravatar.propTypes = {
-  hash: PropTypes.string,
-  naam: PropTypes.string,
-  handler: PropTypes.any
 }
 
 export default Gravatar;

@@ -22,7 +22,7 @@ email: j.vorhauer@novi-education.nl
 | Er is GEEN gebruik gemaakt van out-of-the box styling systemen zoals Bootstrap, Material-UI of Tailwind                                                                     | Ja      |                                                                                           |
 | De broncode wordt ingeleverd zonder ‘node_modules’-map en ’.idea’-map                                                                                                       | Ja      |                                                                                           |
 | De wireframes zijn getekend op papier                                                                                                                                       | Ja      |                                                                                           |
-| De schermontwerpen zijn ontworpen met een design tool zoals Figma of Adobe XD                                                                                               | Ja      |                                                                                           |
+| De schermontwerpen zijn ontworpen met een design tool zoals Figma of Adobe XD                                                                                               | Ja      | Zie [Figma - Novi FrontEnd 2024 - EindOpdracht](https://www.figma.com/file/Vi2bZkZk4EhVTvV5S9iAEf/Novi-FrontEnd-2024---EindOpdracht?type=design&node-id=6-3&mode=design&t=u26nJ6uof02vqOIU-0) |
 | Er wordt gebruik gemaakt van een externe API en een backend voor het inloggen en registreren van gebruikers <br/>(NOVI backend of backend uit eerdere leerlijn of Firebase) | Ja      |                                                                                           |
 | De applicatie start op zonder te crashen                                                                                                                                    | Ja      | Dit is natuurlijk nooit voor iedere configuratie (OS, node/npm versies, etc.) te bewijzen |
 
@@ -34,3 +34,6 @@ het registreren en inloggen via de NOVI backend of Firebase. Gebruikers opslag v
 De laatste eis, de applicatie start op zonder te crashen, is al erg moeilijk te garanderen voor (commerciele/grote) bedrijven, maar voor een solo dev is dat geen
 haalbare eis. Er zijn eenvoudigweg te veel mogelijke configuraties. Ik zou deze eis laten vallen. Misschien iets met Docker? Of een werkende versie ergens op een
 static hosting partij? Bijvoorbeeld, zoals beschreven op [Vite - Deploying a Static Site](https://vitejs.dev/guide/static-deploy.html), via GitHub Pages.
+
+Het Figma ontwerp is ook in deze `docs` folder te vinden: `Novi FrontEnd 2024 - Eindopdracht.fig`. Mocht de link onverhoopt
+niet meer werken...

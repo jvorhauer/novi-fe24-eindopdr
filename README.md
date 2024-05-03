@@ -31,6 +31,8 @@ Drie eenvoudige stappen:
 
 Voer de applicatie uit met `npm run dev`.
 
+Open daarna in een browser [EindOpdracht React Site](http://localhost:5173/)
+
 ## Gebruik
 
 Voor het gebruik van deze app is het noodzakelijk om aan te melden, zodat iedere gebruiker zijn of haar notities en taken kan terugvinden, bewerken, creeren of verwijderen.
@@ -39,9 +41,11 @@ Na het openen van [de applicatie](http://localhost:5173) met een browser wordt h
 
 ![login, aanmelden van een bestaande gebruiker](docs/schermen/aanmelden.png)
 
-Om aan te kunnen melden moet de gebruiker over een account in de app beschikker. Een account kan verkregen worden door te registreren:
+Om aan te kunnen melden moet de gebruiker over een account in de app beschikken. Een account kan verkregen worden door te registreren:
 
 ![Registreren van een nieuwe gebruiker](docs/schermen/registreer.png)
+
+Dit scherm kan bereikt worden door in de login dialog op de "registreer" link te klikken.
 
 Na succesvol inloggen wordt het taken overzicht van de aangemelde gebruiker getoond. In dit overzicht heeft iedere taak een "wijzig" knop (in de blauwe
 cirkel van de "Verantwoording: ToC") taak en een "verwijder" knop (rode cirkel):

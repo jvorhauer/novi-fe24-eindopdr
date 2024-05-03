@@ -37,40 +37,40 @@ Voor het gebruik van deze app is het noodzakelijk om aan te melden, zodat iedere
 
 Na het openen van [de applicatie](http://localhost:5173) met een browser wordt het inlog scherm getoond:
 
-![login, aanmelden van een bestaande gebruiker](docs/login.png)
+![login, aanmelden van een bestaande gebruiker](docs/schermen/aanmelden.png)
 
 Om aan te kunnen melden moet de gebruiker over een account in de app beschikker. Een account kan verkregen worden door te registreren:
 
-![Registreren van een nieuwe gebruiker](docs/registreer.png)
+![Registreren van een nieuwe gebruiker](docs/schermen/registreer.png)
 
-Na succesvol inloggen wordt het taken overzicht van de aangemelde gebruiker getoond. In dit overzicht heeft iedere taak een "wijzig" knop (in de blauwe 
+Na succesvol inloggen wordt het taken overzicht van de aangemelde gebruiker getoond. In dit overzicht heeft iedere taak een "wijzig" knop (in de blauwe
 cirkel van de "Verantwoording: ToC") taak en een "verwijder" knop (rode cirkel):
 
-![Taken overzicht van aangemelde gebruiker](docs/taken.png)
+![Taken overzicht van aangemelde gebruiker](docs/schermen/taken.png)
 
 Op het taken scherm kan dan, onder andere, een nieuwe taak gemaakt worden:
 
-![Nieuwe taak aanmaken](docs/nieuwe-taak.png)
+![Nieuwe taak aanmaken](docs/schermen/taak-aanmaken.png)
 
 Of een bestaande taak kan gewijzigd worden:
 
-![Bestaande taak wijzigen](docs/wijzig-taak.png)
+![Bestaande taak wijzigen](docs/schermen/taak-aanpassen.png)
 
 We gaan verder naar notities, die getoond worden in een lijst, met standaard de eerste (oudste) notitie getoond in het detail-deel van de pagina:
 
-![Notities lijst en detail scherm](docs/notities.png)
+![Notities lijst en detail scherm](docs/schermen/notities.png)
 
 Ook hier kan een nieuwe notitie gemaakt worden:
 
-![Nieuwe notitie aanmaken](docs/nieuwe-notitie.png)
+![Nieuwe notitie aanmaken](docs/schermen/notitie-aanmaken.png)
 
 En een bestaande notities kan gewijzigd worden. De knop voor het starten van een wijziging is hetzelfde als op het taken overzicht scherm:
 
-![Bestaande notitie wijzigen](docs/wijzig-notitie.png)
+![Bestaande notitie wijzigen](docs/schermen/notitie-anpassen.png)
 
-En last, but not least, het verwijderen van een notitie of taak heeft een confirm-box tot gevolg. Deze kan er in een andere browser anders uitzien dan 
+En last, but not least, het verwijderen van een notitie of taak heeft een confirm-box tot gevolg. Deze kan er in een andere browser anders uitzien dan
 hier getoond!
 
-![Notitie verwijderen](docs/verwijder-notitie.png)
+![Notitie verwijderen](docs/schermen/notitie-verwijderen.png)
 
 Tot zover de schermen van de applicatie.

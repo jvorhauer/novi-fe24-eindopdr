@@ -28,7 +28,7 @@ email: j.vorhauer@novi-education.nl
 
 ## Opmerkingen
 
-In bovenstaande QuickScan zijn wel een paar punten die niet helemaal overeenkomen met de eisen verderop in 'Frontend Eindopdracht v3.4.pdf', met name
+In bovenstaande QuickScan zijn wel een paar punten die niet helemaal overeenkomen met de eisen verderop in 'Frontend Eindopdracht v3.3.pdf', met name
 het registreren en inloggen via de NOVI backend of Firebase. Gebruikers opslag vindt plaats in de eigen backend, zie [GitHub - KoNoMaS](https://github.com/jvorhauer/konomas).
 
 De laatste eis, de applicatie start op zonder te crashen, is al erg moeilijk te garanderen voor (commerciele/grote) bedrijven, maar voor een solo dev is dat geen
@@ -36,4 +36,4 @@ haalbare eis. Er zijn eenvoudigweg te veel mogelijke configuraties. Ik zou deze 
 static hosting partij? Bijvoorbeeld, zoals beschreven op [Vite - Deploying a Static Site](https://vitejs.dev/guide/static-deploy.html), via GitHub Pages.
 
 Het Figma ontwerp is ook in deze `docs` folder te vinden: `Novi FrontEnd 2024 - Eindopdracht.fig`. Mocht de link onverhoopt
-niet meer werken...
+niet (meer) werken...
